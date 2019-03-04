@@ -28,96 +28,96 @@
   </Form>
 </template>
 <script>
-  import request from '../../assets/js/request'
-  import {AxiosInstance as axios} from "axios";
+import request from '../../assets/js/request'
+import { AxiosInstance as axios } from 'axios'
 
-  export default {
-    name: 'LoginForm',
-    props: {
-      userNameRules: {
-        type: Array,
-        default: () => {
-          return [
-            {required: true, message: '账号不能为空', trigger: 'blur'}
-          ]
-        }
-      },
-      passwordRules: {
-        type: Array,
-        default: () => {
-          return [
-            {required: true, message: '密码不能为空', trigger: 'blur'}
-          ]
-        }
-      },
-      validateRules: {
-        type: Array,
-        default: () => {
-          return [
-            {required: true, message: '验证码不能为空', trigger: 'blur'}
-          ]
-        }
+export default {
+  name: 'LoginForm',
+  props: {
+    userNameRules: {
+      type: Array,
+      default: () => {
+        return [
+          { required: true, message: '账号不能为空', trigger: 'blur' }
+        ]
       }
     },
-    data() {
-      return {
-        form: {
-          userName: 'admin',
-          password: 'admin',
-          validate: ''
-        },
-        validate_pic: ''
+    passwordRules: {
+      type: Array,
+      default: () => {
+        return [
+          { required: true, message: '密码不能为空', trigger: 'blur' }
+        ]
       }
     },
-    computed: {
-      rules() {
-        return {
-          userName: this.userNameRules,
-          password: this.passwordRules,
-          validate: this.validateRules
-        }
-      }
-    },
-    methods: {
-      handleSubmit() {
-        this.$refs.loginForm.validate((valid) => {
-          if (valid) {
-            this.$emit('on-success-valid', {
-              userName: this.form.userName,
-              password: this.form.password,
-              validate: this.form.validate
-            })
-          }
-        })
-      },
-      validatePic() {
-        let timestamp = (new Date()).valueOf();
-        request.validatePic1(timestamp).then(response => {
-          console.log(response);
-          this.validate_pic = response.url
-          //console.log(this.getBase64Image(response.data))
-        })
-      },
-      changeUrl(url) {
-        let timestamp = (new Date()).valueOf();
-        let index = url.indexOf("?",url);
-        if (index > 0) {
-          url = url.substring(index, url.indexOf(url, "?"));
-        }
-        if ((url.indexOf("&") >= 0)) {
-          url = url + "×tamp=" + timestamp;
-        } else {
-          url = url + "?timestamp=" + timestamp;
-        }
-        return url;
-      }
-    },
-    mounted() {
-      request.validatePic({}).then(response => {
-        console.log(response);
-          this.validate_pic = response.url
-          //console.log(this.getBase64Image(response.data))
-        })
+    validateRules: {
+      type: Array,
+      default: () => {
+        return [
+          { required: true, message: '验证码不能为空', trigger: 'blur' }
+        ]
       }
     }
+  },
+  data () {
+    return {
+      form: {
+        userName: 'admin',
+        password: 'admin',
+        validate: ''
+      },
+      validate_pic: ''
+    }
+  },
+  computed: {
+    rules () {
+      return {
+        userName: this.userNameRules,
+        password: this.passwordRules,
+        validate: this.validateRules
+      }
+    }
+  },
+  methods: {
+    handleSubmit () {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.$emit('on-success-valid', {
+            userName: this.form.userName,
+            password: this.form.password,
+            validate: this.form.validate
+          })
+        }
+      })
+    },
+    validatePic () {
+      let timestamp = (new Date()).valueOf()
+      request.validatePic1(timestamp).then(response => {
+        console.log(response)
+        this.validate_pic = response.url
+        // console.log(this.getBase64Image(response.data))
+      })
+    },
+    changeUrl (url) {
+      let timestamp = (new Date()).valueOf()
+      let index = url.indexOf('?', url)
+      if (index > 0) {
+        url = url.substring(index, url.indexOf(url, '?'))
+      }
+      if ((url.indexOf('&') >= 0)) {
+        url = url + '×tamp=' + timestamp
+      } else {
+        url = url + '?timestamp=' + timestamp
+      }
+      return url
+    }
+  },
+  mounted () {
+    request.validatePic({}).then(response => {
+      console.log(response)
+      this.validate_pic = response.url
+      // console.log(this.getBase64Image(response.data))
+    })
+  }
+}
 </script>

@@ -94,7 +94,7 @@ export default {
                   }
                 }, '删除')
               ])
-            },
+            }
           ]
         }
       ],
@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     handleDelete (params) {
-      //console.log(params)
+      // console.log(params)
       request.delGameInstance({
         id: params.row.id
       }).then(res => {

@@ -47,7 +47,7 @@ export default {
       searchTel: '',
       pageTotal: 0,
       pageSize: 0,
-      columns : [
+      columns: [
         { title: '姓名', key: 'userName', searchable: false },
         { title: '电话', key: 'tel' },
         { title: '余额', key: 'balance' },
@@ -106,41 +106,39 @@ export default {
             },
             (h, params) => {
               return params.row.activateStatus === 2
-                ?
-                  h('Button', {
-                    props: {
-                      type: 'error',
-                      size: 'small'
-                    },
-                    style: {
-                      marginLeft: '10px'
-                    },
-                    on: {
-                      click: () => {
-                        this.accountThaw(params.row.id)
-                        params.row.activateStatus = 0
-                        this.$Message.success('解冻成功')
-                      }
+                ? h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginLeft: '10px'
+                  },
+                  on: {
+                    click: () => {
+                      this.accountThaw(params.row.id)
+                      params.row.activateStatus = 0
+                      this.$Message.success('解冻成功')
                     }
-                  }, '解冻')
+                  }
+                }, '解冻')
 
-                :
-                  h('Button', {
-                    props: {
-                      type: 'primary',
-                      size: 'small'
-                    },
-                    style: {
-                      marginLeft: '10px'
-                    },
-                    on: {
-                      click: () => {
-                        this.frozenAccount(params.row.id)
-                        params.row.activateStatus = 2
-                        this.$Message.success('冻结成功')
-                      }
+                : h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginLeft: '10px'
+                  },
+                  on: {
+                    click: () => {
+                      this.frozenAccount(params.row.id)
+                      params.row.activateStatus = 2
+                      this.$Message.success('冻结成功')
                     }
-                  }, '冻结')
+                  }
+                }, '冻结')
             }
           ]
         }

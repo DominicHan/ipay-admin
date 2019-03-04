@@ -85,7 +85,7 @@ export default {
     request.getGameInstance({
       id: this.$route.query.gameId
     }).then(res => {
-      //console.log(JSON.stringify(res.body.data));
+      // console.log(JSON.stringify(res.body.data));
       this.gameTitle = res.body.data.instance.gameTitle
       this.gameContent = res.body.data.instance.gameContent
       this.lotteryTime = res.body.data.instance.lotteryTime

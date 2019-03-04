@@ -54,7 +54,7 @@ export default {
     return {
       accountData: '',
       balanceEditable: true,
-      creditBalanceEditable: true,
+      creditBalanceEditable: true
     }
   },
   methods: {
@@ -62,10 +62,10 @@ export default {
       console.log(params)
     },
     setBalanceEditable () {
-      this.balanceEditable = false;
+      this.balanceEditable = false
     },
     setCreditBalanceEditable () {
-      this.creditBalanceEditable = false;
+      this.creditBalanceEditable = false
     },
     setAccountInfo () {
       request.setAccountInfo({
@@ -86,8 +86,8 @@ export default {
     request.accountInfo({
       id: this.$route.query.userId
     }).then(res => {
-      console.log(JSON.stringify(res.body.data));
-      this.accountData = res.body.data;
+      console.log(JSON.stringify(res.body.data))
+      this.accountData = res.body.data
     })
   }
 }

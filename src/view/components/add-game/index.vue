@@ -90,9 +90,9 @@ export default {
       }
     },
     addGameInstance () {
-      this.dataCheck();
-      let betGear = '';
-      let is_choose = 0;
+      this.dataCheck()
+      let betGear = ''
+      let is_choose = 0
       if (this.one) {
         betGear += ',1'
         is_choose += 1
@@ -111,12 +111,12 @@ export default {
       }
       if (is_choose < 3) {
         this.$Message.error('设置参数至少是三个')
-        return;
+        return
       }
-      let lotteryTime = this.date + ' ' + this.time;
-      lotteryTime = lotteryTime.replace(/-/g,"/");
-      //lotteryTime = lotteryTime.getUTCDate();
-      //let lotteryDT = new Date(lotteryTime).toUTCString();
+      let lotteryTime = this.date + ' ' + this.time
+      lotteryTime = lotteryTime.replace(/-/g, '/')
+      // lotteryTime = lotteryTime.getUTCDate();
+      // let lotteryDT = new Date(lotteryTime).toUTCString();
       request.addGameInstance({
         gameTitle: this.game_title,
         lotteryTime: lotteryTime,

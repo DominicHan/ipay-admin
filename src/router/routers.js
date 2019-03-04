@@ -152,7 +152,7 @@ export default [
           title: '投资人编辑'
         },
         component: () => import('@/view/components/investor-edit/index.vue')
-      },
+      }
     ]
   },
   {

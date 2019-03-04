@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     handleDelete (params) {
-      //console.log(params.row.id)
+      // console.log(params.row.id)
       request.adminUserDelete({
         id: params.row.id
       }).then(res => {
