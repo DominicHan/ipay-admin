@@ -19,6 +19,7 @@
 import LoginForm from '_c/login-form'
 import { mapActions } from 'vuex'
 import request from '../../assets/js/request'
+import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util'
 export default {
   components: {
     LoginForm
@@ -45,6 +46,7 @@ export default {
       }).then(res => {
         if (res.body.rspCode == '000000') {
           // this.handleSubmitOld({ userName, password });
+          sessionStorage.setItem('token', '11')
           this.$router.push({ path: '/' })
         } else {
           this.$Message.error(res.body.rspMsg)
