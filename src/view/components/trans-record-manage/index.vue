@@ -3,25 +3,25 @@
     <Card>
       <div class="searchLine">
         <Input v-model="searchName" style="width: 250px;">
-        <span slot="prepend">&nbsp;&nbsp;&nbsp;投资人姓名 : &nbsp;&nbsp;&nbsp;</span>
+        <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('investor_name')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <br><br>
-        <span slot="prepend">&nbsp;&nbsp;&nbsp;交易类型 : &nbsp;&nbsp;&nbsp;</span>
+        <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('trading_type')}} : &nbsp;&nbsp;&nbsp;</span>
         <Select v-model="searchType" slot="append" style="width: 150px">
-          <Option value=-1>全部</Option>
-          <Option value=0>转账</Option>
-          <Option value=1>信用账户转换</Option>
-          <Option value=2>邀请红利</Option>
+          <Option value=-1>{{$t('all')}}</Option>
+          <Option value=0>{{$t('transfer')}}</Option>
+          <Option value=1>{{$t('credit_conversion')}}</Option>
+          <Option value=2>{{$t('invite_bonus')}}</Option>
         </Select>
-        <Button type="primary" style="margin-left: 15px" @click="searchRecord">搜索</Button>
-        <Button type="primary" style="margin-left: 15px" @click="clearSearchBox">清空</Button>
+        <Button type="primary" style="margin-left: 15px" @click="searchRecord">{{$t('search')}}</Button>
+        <Button type="primary" style="margin-left: 15px" @click="clearSearchBox">{{$t('clear')}}</Button>
       </div>
       <tables ref="tables" v-model="tableData" :columns="columns" @on-delete="handleDelete"/>
       <div style="margin: 10px; display: flex; align-items: center">
         <template>
           <Page :total="pageTotal" show-elevator :page-size="pageSize" @on-change="change"/>
         </template>
-        <div style="margin-left: 20px">共 {{this.pageTotal}} 条</div>
+        <div style="margin-left: 20px">{{$t('total')}} {{this.pageTotal}} {{$t('article')}}</div>
       </div>
     </Card>
   </div>
@@ -30,7 +30,7 @@
 <script>
 import Tables from '_c/tables'
 import request from '../../../assets/js/request.js'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'tables_page',
   components: {
@@ -43,38 +43,38 @@ export default {
       pageTotal: 0,
       pageSize: 0,
       columns: [
-        { title: '投资人姓名', key: 'userName', sortable: false },
+        { title: this.$t('investor_name'), key: 'userName', sortable: false },
         {
-          title: '交易类型',
+          title: this.$t('trading_type'),
           key: 'transactionType',
           render: (h, params) => {
             return h('div', [
               h(
                 'div',
                 {},
-                params.row.transactionType === 0 ? '转账' : '信用账户转换'
+                params.row.transactionType === 0 ? this.$t('transfer') : this.$t('credit_conversion')
               )
             ])
           }
         },
-        { title: '交易金额', key: 'transactionAmount' },
+        { title: this.$t('transaction_amount'), key: 'transactionAmount' },
         {
-          title: '交易方向',
+          title: this.$t('trade_direction'),
           key: 'tradeDirection',
           render: (h, params) => {
             return h('div', [
               h(
                 'div',
                 {},
-                params.row.tradeDirection === 0 ? '入账' : '出账'
+                params.row.tradeDirection === 0 ? this.$t('in_account') : this.$t('out_account')
               )
             ])
           }
         },
-        { title: '修改之前金额', key: 'preTransactionAmount' },
-        { title: '修改之后金额', key: 'postTransactionAmount' },
+        { title: this.$t('pre_trans_amount'), key: 'preTransactionAmount' },
+        { title: this.$t('post_trans_amount'), key: 'postTransactionAmount' },
         {
-          title: '创建时间',
+          title: this.$t('create_date'),
           key: 'createdAt',
           render: (h, params) => {
             return h('div', [
@@ -87,7 +87,7 @@ export default {
           }
         },
         {
-          title: '更新时间',
+          title: this.$t('update_date'),
           key: 'updateAt',
           render: (h, params) => {
             return h('div', [
@@ -116,6 +116,85 @@ export default {
       ],
       tableData: []
     }
+  },
+  watch: {
+    local: function (val) { // 侦听单选按钮的变化，从而进行切换语言
+      this.columns = [
+        { title: this.$t('investor_name'), key: 'userName', sortable: false },
+        {
+          title: this.$t('trading_type'),
+          key: 'transactionType',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.transactionType === 0 ? this.$t('transfer') : this.$t('credit_conversion')
+              )
+            ])
+          }
+        },
+        { title: this.$t('transaction_amount'), key: 'transactionAmount' },
+        {
+          title: this.$t('trade_direction'),
+          key: 'tradeDirection',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.tradeDirection === 0 ? this.$t('in_account') : this.$t('out_account')
+              )
+            ])
+          }
+        },
+        { title: this.$t('pre_trans_amount'), key: 'preTransactionAmount' },
+        { title: this.$t('post_trans_amount'), key: 'postTransactionAmount' },
+        {
+          title: this.$t('create_date'),
+          key: 'createdAt',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                new Date(params.row.createdAt).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+              )
+            ])
+          }
+        },
+        {
+          title: this.$t('update_date'),
+          key: 'updateAt',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                new Date(params.row.updateAt).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+              )
+            ])
+          }
+        }
+        // {
+        //   title: '冻结',
+        //   key: 'frozenStatus',
+        //   render: (h, params) => {
+        //     return h('div', [
+        //       h(
+        //         'div',
+        //         {},
+        //         params.row.frozenStatus === 0 ? '可冻结'
+        //           : params.row.frozenStatus === 1 ? '冻结中' : '已冻结'
+        //       )
+        //     ])
+        //   }
+        // }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['local'])
   },
   methods: {
     handleDelete (params) {

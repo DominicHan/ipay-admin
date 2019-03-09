@@ -3,27 +3,27 @@
     <Card>
       <div class="sys_config">
         <Input v-model="benefit_ratio" style="width: 300px; margin-left: 15px">
-          <span slot="prepend">&nbsp;&nbsp;&nbsp;收益比例 : &nbsp;&nbsp;&nbsp;</span>
+          <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('benefit_ratio')}} : &nbsp;&nbsp;&nbsp;</span>
           <span slot="append">%</span>
         </Input>
         <br>
         <Input v-model="in_proportion" style="width: 300px; margin-left: 15px">
-          <span slot="prepend">&nbsp;&nbsp;&nbsp;信用账户转入比例 : &nbsp;&nbsp;&nbsp;</span>
+          <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('in_proportion')}} : &nbsp;&nbsp;&nbsp;</span>
           <span slot="append">%</span>
         </Input>
         <br>
         <Input v-model="out_proportion" style="width: 300px; margin-left: 15px">
-          <span slot="prepend">&nbsp;&nbsp;&nbsp;信用账户转出比例 : &nbsp;&nbsp;&nbsp;</span>
+          <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('out_proportion')}} : &nbsp;&nbsp;&nbsp;</span>
           <span slot="append">%</span>
         </Input>
         <br>
         <Input v-model="game_return_pro" style="width: 300px; margin-left: 15px">
-        <span slot="prepend">&nbsp;&nbsp;&nbsp;游戏获胜返还比例 : &nbsp;&nbsp;&nbsp;</span>
+        <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('game_return_pro')}} : &nbsp;&nbsp;&nbsp;</span>
         <span slot="append">%</span>
         </Input>
         <br>
         <div>
-          <Button type="primary" style="margin-left: 15px" @click="updateSysConfig">保存</Button>
+          <Button type="primary" style="margin-left: 15px" @click="updateSysConfig">{{$t('save')}}</Button>
         </div>
       </div>
     </Card>
@@ -60,9 +60,9 @@ export default {
         gameReturnPro: this.game_return_pro
       }).then(res => {
         if (res.body.rspCode === '000000') {
-          this.$Message.success('更新成功')
+          this.$Message.success(this.$t('update_success'))
         } else {
-          this.$Message.error('更新失败')
+          this.$Message.error(this.$t('update_error'))
         }
       })
     }

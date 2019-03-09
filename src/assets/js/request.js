@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import {
+  localRead
+} from '@/libs/util'
 
 Vue.use(VueResource)
 
 Vue.http.options.emulateJSON = true
 Vue.http.options.emulateHTTP = true
+
 // const url_root = 'http://47.74.24.151:8080/'
 const url_root = 'http://localhost:8080/'
+
 export default ({
   // 获取用户登录信息
   getAccountListData (data) {
@@ -81,4 +86,13 @@ export default ({
   validatePic1 (data) {
     return Vue.http.get(url_root + 'bg/validate_pic?timestamp=' + data)
   }
+})
+
+Vue.http.interceptors.push(function (request) {
+  const local = localRead('local')
+  let lang = 'zh'
+  if (local === 'ko-KR') {
+    lang = 'en'
+  }
+  request.headers.set('Accept-Language', lang)
 })

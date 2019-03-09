@@ -22,13 +22,15 @@ export default {
     return {
       langList: {
         'zh-CN': '语言',
-        'zh-TW': '語言',
-        'en-US': 'Lang'
+        'ko-KR': '언어'
+        // 'zh-TW': '語言',
+        // 'en-US': 'Lang'
       },
       localList: {
         'zh-CN': '中文简体',
-        'zh-TW': '中文繁体',
-        'en-US': 'English'
+        'ko-KR': '한국어'
+        // 'zh-TW': '中文繁体',
+        // 'en-US': 'English'
       }
     }
   },

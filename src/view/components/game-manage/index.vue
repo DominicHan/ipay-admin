@@ -2,14 +2,14 @@
   <div>
     <Card>
       <div class="searchLine">
-        <Button type="primary" style="margin-left: 15px" to="/add_game" replace>添加</Button>
+        <Button type="primary" style="margin-left: 15px" to="/add_game" replace>{{$t('add')}}</Button>
       </div>
       <tables ref="tables" v-model="tableData" :columns="columns" @on-delete="handleDelete"/>
       <div style="margin: 10px; display: flex; align-items: center">
         <template>
           <Page :total="pageTotal" show-elevator :page-size="pageSize" @on-change="change"/>
         </template>
-        <div style="margin-left: 20px">共 {{this.pageTotal}} 条</div>
+        <div style="margin-left: 20px">{{$t('total')}} {{this.pageTotal}} {{$t('article')}}</div>
       </div>
     </Card>
   </div>
@@ -18,7 +18,7 @@
 <script>
 import Tables from '_c/tables'
 import request from '../../../assets/js/request.js'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'tables_page',
   components: {
@@ -31,12 +31,12 @@ export default {
       pageTotal: 0,
       pageSize: 0,
       columns: [
-        { title: '游戏标题', key: 'gameTitle', sortable: false },
-        { title: '发布时间', key: 'createdAt', sortable: false },
-        { title: '游戏内容', key: 'gameContent', sortable: false },
-        { title: '投注档位', key: 'betGear', sortable: false },
-        { title: '开奖时间', key: 'lotteryTime', sortable: false },
-        { title: '操作',
+        { title: this.$t('game_title'), key: 'gameTitle', sortable: false },
+        { title: this.$t('created_at'), key: 'createdAt', sortable: false },
+        { title: this.$t('game_content'), key: 'gameContent', sortable: false },
+        { title: this.$t('bet_gear'), key: 'betGear', sortable: false },
+        { title: this.$t('lottery_time'), key: 'lotteryTime', sortable: false },
+        { title: this.$t('operation'),
           key: 'handle',
           width: 230,
           // align: 'center',
@@ -53,7 +53,7 @@ export default {
                     this.$router.push({ path: '/game_result_set', query: { gameId: params.row.id } })
                   }
                 }
-              }, '编辑')
+              }, this.$t('edit'))
             },
             (h, params) => {
               return h('Button', {
@@ -69,13 +69,13 @@ export default {
                     this.$router.push({ path: '/game_profit', query: { gameId: params.row.id } })
                   }
                 }
-              }, '盈亏表')
+              }, this.$t('profit_loss_table'))
             },
             (h, params, vm) => {
               return h('Poptip', {
                 props: {
                   confirm: true,
-                  title: '你确定要删除吗?'
+                  title: this.$t('confirm_del')
                 },
                 on: {
                   'on-ok': () => {
@@ -92,7 +92,7 @@ export default {
                     type: 'error',
                     size: 'small'
                   }
-                }, '删除')
+                }, this.$t('delete'))
               ])
             }
           ]
@@ -100,6 +100,81 @@ export default {
       ],
       tableData: []
     }
+  },
+  watch: {
+    local: function (val) { // 侦听单选按钮的变化，从而进行切换语言
+      this.columns = [
+        { title: this.$t('game_title'), key: 'gameTitle', sortable: false },
+        { title: this.$t('created_at'), key: 'createdAt', sortable: false },
+        { title: this.$t('game_content'), key: 'gameContent', sortable: false },
+        { title: this.$t('bet_gear'), key: 'betGear', sortable: false },
+        { title: this.$t('lottery_time'), key: 'lotteryTime', sortable: false },
+        { title: this.$t('operation'),
+          key: 'handle',
+          width: 230,
+          // align: 'center',
+          // options: ['delete'],
+          button: [
+            (h, params) => {
+              return h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({ path: '/game_result_set', query: { gameId: params.row.id } })
+                  }
+                }
+              }, this.$t('edit'))
+            },
+            (h, params) => {
+              return h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginLeft: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({ path: '/game_profit', query: { gameId: params.row.id } })
+                  }
+                }
+              }, this.$t('profit_loss_table'))
+            },
+            (h, params, vm) => {
+              return h('Poptip', {
+                props: {
+                  confirm: true,
+                  title: this.$t('confirm_del')
+                },
+                on: {
+                  'on-ok': () => {
+                    vm.$emit('on-delete', params)
+                    vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
+                  }
+                }
+              }, [
+                h('Button', {
+                  style: {
+                    marginLeft: '5px'
+                  },
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  }
+                }, this.$t('delete'))
+              ])
+            }
+          ]
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['local'])
   },
   methods: {
     handleDelete (params) {

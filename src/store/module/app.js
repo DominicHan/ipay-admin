@@ -36,7 +36,8 @@ export default {
   },
   getters: {
     menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
-    errorCount: state => state.errorList.length
+    errorCount: state => state.errorList.length,
+    local: state => state.local
   },
   mutations: {
     setBreadCrumb (state, route) {

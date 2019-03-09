@@ -3,17 +3,17 @@
     <Card>
       <div class="searchLine">
         <Input v-model="searchName" style="width: 250px;">
-          <span slot="prepend">&nbsp;&nbsp;&nbsp;姓名 : &nbsp;&nbsp;&nbsp;</span>
+          <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('name')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <br><br>
         <Input v-model="searchTel" style="width: 250px; margin-left: 15px">
-          <span slot="prepend">&nbsp;&nbsp;&nbsp;电话 : &nbsp;&nbsp;&nbsp;</span>
+          <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('user_tel')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
-        <Button type="primary" style="margin-left: 15px" @click="searchAccount">搜索</Button>
-        <Button type="primary" style="margin-left: 15px" @click="clearSearchBox">清空</Button>
-        <Button type="primary" style="margin-left: 15px" @click="exportExcel">导出投资人</Button>
-        <div style="margin-left: 15px">总余额: {{balance}}</div>
-        <div style="margin-left: 15px">总信用额: {{creditBalance}}</div>
+        <Button type="primary" style="margin-left: 15px" @click="searchAccount">{{$t('search')}}</Button>
+        <Button type="primary" style="margin-left: 15px" @click="clearSearchBox">{{$t('clear')}}</Button>
+        <Button type="primary" style="margin-left: 15px" @click="exportExcel">{{$t('export_investor')}}</Button>
+        <div style="margin-left: 15px">{{$t('total_balance')}}: {{balance}}</div>
+        <div style="margin-left: 15px">{{$t('total_credit_balance')}}: {{creditBalance}}</div>
       </div>
       <tables ref="tables" v-model="tableData" :columns="columns" @on-delete="handleDelete"/>
       <!--<tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete"/>-->
@@ -24,7 +24,7 @@
         <template>
           <Page :total="pageTotal" show-elevator :page-size="pageSize" @on-change="change"/>
         </template>
-        <div style="margin-left: 20px">共 {{this.pageTotal}} 条</div>
+        <div style="margin-left: 20px">{{$t('total')}} {{this.pageTotal}} {{$t('article')}}</div>
       </div>
     </Card>
   </div>
@@ -33,7 +33,7 @@
 <script>
 import Tables from '_c/tables'
 import request from '../../../assets/js/request.js'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'tables_page',
   components: {
@@ -48,13 +48,13 @@ export default {
       pageTotal: 0,
       pageSize: 0,
       columns: [
-        { title: '姓名', key: 'userName', searchable: false },
-        { title: '电话', key: 'tel' },
-        { title: '余额', key: 'balance' },
-        { title: '信用', key: 'creditBalance' },
-        { title: '邀请码', key: 'inviteCode' },
+        { title: this.$t('name'), key: 'userName', searchable: false },
+        { title: this.$t('user_tel'), key: 'tel' },
+        { title: this.$t('balance'), key: 'balance' },
+        { title: this.$t('credit_balance'), key: 'creditBalance' },
+        { title: this.$t('invite_code'), key: 'inviteCode' },
         {
-          title: '黑名单',
+          title: this.$t('black_list'),
           key: 'blacklist',
           render: (h, params) => {
             return h('div', [
@@ -65,12 +65,12 @@ export default {
                   //   color:  params.row.blacklist === "0" ? "green" : "red"
                   // }
                 },
-                params.row.blacklist === 0 ? '否' : '是'
+                params.row.blacklist === 0 ? this.$t('no') : this.$t('yes')
               )
             ])
           }
         },
-        { title: '操作',
+        { title: this.$t('operation'),
           key: 'handle',
           width: 260,
           align: 'center',
@@ -86,7 +86,7 @@ export default {
                     this.$router.push({ path: 'investor_edit', query: { userId: params.row.id } })
                   }
                 }
-              }, '查看')
+              }, this.$t('look_over'))
             },
             (h, params) => {
               return h('Button', {
@@ -102,7 +102,7 @@ export default {
                     this.$router.push({ path: 'investor_relationship', query: { userId: params.row.id } })
                   }
                 }
-              }, '三级关系表')
+              }, this.$t('investor_relationship'))
             },
             (h, params) => {
               return params.row.activateStatus === 2
@@ -118,10 +118,10 @@ export default {
                     click: () => {
                       this.accountThaw(params.row.id)
                       params.row.activateStatus = 0
-                      this.$Message.success('解冻成功')
+                      this.$Message.success(this.$t('thaw_success'))
                     }
                   }
-                }, '解冻')
+                }, this.$t('thaw'))
 
                 : h('Button', {
                   props: {
@@ -135,16 +135,119 @@ export default {
                     click: () => {
                       this.frozenAccount(params.row.id)
                       params.row.activateStatus = 2
-                      this.$Message.success('冻结成功')
+                      this.$Message.success(this.$t('freeze_success'))
                     }
                   }
-                }, '冻结')
+                }, this.$t('freeze'))
             }
           ]
         }
       ],
       tableData: []
     }
+  },
+  watch: {
+    local: function (val) { // 侦听单选按钮的变化，从而进行切换语言
+      this.columns = [
+        { title: this.$t('name'), key: 'userName', searchable: false },
+        { title: this.$t('user_tel'), key: 'tel' },
+        { title: this.$t('balance'), key: 'balance' },
+        { title: this.$t('credit_balance'), key: 'creditBalance' },
+        { title: this.$t('invite_code'), key: 'inviteCode' },
+        {
+          title: this.$t('black_list'),
+          key: 'blacklist',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {
+                  // props: {
+                  //   color:  params.row.blacklist === "0" ? "green" : "red"
+                  // }
+                },
+                params.row.blacklist === 0 ? this.$t('no') : this.$t('yes')
+              )
+            ])
+          }
+        },
+        { title: this.$t('operation'),
+          key: 'handle',
+          width: 260,
+          align: 'center',
+          button: [
+            (h, params) => {
+              return h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({ path: 'investor_edit', query: { userId: params.row.id } })
+                  }
+                }
+              }, this.$t('look_over'))
+            },
+            (h, params) => {
+              return h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginLeft: '10px'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({ path: 'investor_relationship', query: { userId: params.row.id } })
+                  }
+                }
+              }, this.$t('investor_relationship'))
+            },
+            (h, params) => {
+              return params.row.activateStatus === 2
+                ? h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginLeft: '10px'
+                  },
+                  on: {
+                    click: () => {
+                      this.accountThaw(params.row.id)
+                      params.row.activateStatus = 0
+                      this.$Message.success(this.$t('thaw_success'))
+                    }
+                  }
+                }, this.$t('thaw'))
+
+                : h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginLeft: '10px'
+                  },
+                  on: {
+                    click: () => {
+                      this.frozenAccount(params.row.id)
+                      params.row.activateStatus = 2
+                      this.$Message.success(this.$t('freeze_success'))
+                    }
+                  }
+                }, this.$t('freeze'))
+            }
+          ]
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['local'])
   },
   methods: {
     handleDelete (params) {
@@ -164,7 +267,7 @@ export default {
     },
     exportExcel () {
       this.$refs.tables.exportCsv({
-        filename: `投资人-${(new Date()).valueOf()}.csv`
+        filename: `${this.$t('investor')}-${(new Date()).valueOf()}.csv`
       })
     },
     clearSearchBox () {

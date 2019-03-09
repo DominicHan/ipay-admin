@@ -2,39 +2,39 @@
   <div>
     <Card>
       <div class="sys_config">
-        <div>用户名</div>
+        <div>{{$t('user_name')}}</div>
         <div>{{accountData.userName}}</div>
         <br>
-        <div>手机号</div>
+        <div>{{$t('user_tel')}}</div>
         <div>{{accountData.tel}}</div>
         <br>
-        <div>邮箱地址</div>
+        <div>{{$t('user_email')}}</div>
         <div>{{accountData.email}}</div>
         <br>
-        <div>创建时间</div>
+        <div>{{$t('create_date')}}</div>
         <div>{{accountData.createdAt}}</div>
         <br>
-        <div>邀请码</div>
+        <div>{{$t('invite_code')}}</div>
         <div>{{accountData.inviteCode}}</div>
         <br>
-        <div>余额</div>
+        <div>{{$t('balance')}}</div>
         <div>
           <Input v-model="accountData.balance"  style="width: 150px;" :disabled="balanceEditable"
-                 placeholder="请输入余额" maxlength="255">
+                 :placeholder="$t('plz_input_balance')" maxlength="255">
           </Input>
-          <Button type="text" @click="setBalanceEditable">编辑</Button>
+          <Button type="text" @click="setBalanceEditable">{{$t('edit')}}</Button>
         </div>
         <br>
-        <div>信用额</div>
+        <div>{{$t('credit_balance')}}</div>
         <div>
           <Input v-model="accountData.creditBalance"  style="width: 150px;" :disabled="creditBalanceEditable"
-                 placeholder="请输入信用额" maxlength="255">
+                 :placeholder="$t('plz_input_credit_balance')" maxlength="255">
           </Input>
-          <Button type="text" @click="setCreditBalanceEditable">编辑</Button>
+          <Button type="text" @click="setCreditBalanceEditable">{{$t('edit')}}</Button>
         </div>
         <br>
         <div>
-          <Button type="primary" style="margin-left: 15px" @click="setAccountInfo">保存</Button>
+          <Button type="primary" style="margin-left: 15px" @click="setAccountInfo">{{$t('save')}}</Button>
         </div>
       </div>
     </Card>
@@ -74,10 +74,10 @@ export default {
         creditBalance: this.accountData.creditBalance
       }).then(res => {
         if (res.body.rspCode === '000000') {
-          this.$Message.success('设置成功')
+          this.$Message.success(this.$t('set_success'))
           this.$router.push({ path: '/components/investor-manage' })
         } else {
-          this.$Message.error('设置失败')
+          this.$Message.error(this.$t('set_error'))
         }
       })
     }

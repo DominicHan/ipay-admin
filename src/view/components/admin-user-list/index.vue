@@ -2,10 +2,10 @@
   <div>
     <Card>
       <Button style="margin: 10px;overflow: hidden;position: absolute; top: 16px; right: 51%"
-        type="primary" to="/add_admin_user" replace>添加</Button>
+        type="primary" to="/add_admin_user" replace>{{$t('add')}}</Button>
       <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete"/>
       <div style="margin: 10px;overflow: hidden">
-        <Button style="margin: 10px 0;" type="primary" @click="exportExcel">导出为Csv文件</Button>
+        <Button style="margin: 10px 0;" type="primary" @click="exportExcel">{{$t('export_excel')}}</Button>
         <!--<div style="float: right; margin-right: 60px">-->
         <!--<Page :total="100" :current="1" @on-change="changePage"></Page>-->
         <!--</div>-->
@@ -19,6 +19,7 @@ import Tables from '_c/tables'
 // import { getTableData } from '@/api/data'
 // import request from '@/assets/js/request.js';
 import request from '../../../assets/js/request.js'
+import { mapGetters } from 'vuex'
 export default {
   name: 'tables_page',
   components: {
@@ -27,10 +28,10 @@ export default {
   data () {
     return {
       columns: [
-        { title: '账号', key: 'id', sortable: false },
-        { title: '姓名', key: 'adminName' },
-        { title: '手机号', key: 'adminTel' },
-        { title: '操作',
+        { title: this.$t('account_no'), key: 'id', sortable: false },
+        { title: this.$t('name'), key: 'adminName' },
+        { title: this.$t('admin_tel'), key: 'adminTel' },
+        { title: this.$t('operation'),
           key: 'handle',
           width: 150,
           // align: 'center',
@@ -40,7 +41,7 @@ export default {
               return h('Poptip', {
                 props: {
                   confirm: true,
-                  title: '你确定要删除吗?'
+                  title: this.$t('confirm_del')
                 },
                 on: {
                   'on-ok': () => {
@@ -54,7 +55,7 @@ export default {
                     type: 'error',
                     size: 'small'
                   }
-                }, '删除')
+                }, this.$t('delete'))
               ])
             },
             (h, params) => {
@@ -72,13 +73,71 @@ export default {
                     this.$router.push({ path: '/update_admin_user', query: { id: params.row.id } })
                   }
                 }
-              }, '查看')
+              }, this.$t('look_over'))
             }
           ]
         }
       ],
       tableData: []
     }
+  },
+  watch: {
+    local: function (val) { // 侦听单选按钮的变化，从而进行切换语言
+      this.columns = [
+        { title: this.$t('account_no'), key: 'id', sortable: false },
+        { title: this.$t('name'), key: 'adminName' },
+        { title: this.$t('admin_tel'), key: 'adminTel' },
+        { title: this.$t('operation'),
+          key: 'handle',
+          width: 150,
+          // align: 'center',
+          // options: ['delete'],
+          button: [
+            (h, params, vm) => {
+              return h('Poptip', {
+                props: {
+                  confirm: true,
+                  title: this.$t('confirm_del')
+                },
+                on: {
+                  'on-ok': () => {
+                    vm.$emit('on-delete', params)
+                    vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
+                  }
+                }
+              }, [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  }
+                }, this.$t('delete'))
+              ])
+            },
+            (h, params) => {
+              return h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginLeft: '5px'
+                },
+                on: {
+                  click: () => {
+                    // console.log(params);
+                    this.$router.push({ path: '/update_admin_user', query: { id: params.row.id } })
+                  }
+                }
+              }, this.$t('look_over'))
+            }
+          ]
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['local'])
   },
   methods: {
     handleDelete (params) {

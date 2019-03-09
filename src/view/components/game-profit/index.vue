@@ -21,7 +21,7 @@
         <template>
           <Page :total="pageTotal" show-elevator :page-size="pageSize" @on-change="change"/>
         </template>
-        <div style="margin-left: 20px">共 {{this.pageTotal}} 条</div>
+        <div style="margin-left: 20px">{{$t('total')}} {{this.pageTotal}} {{$t('article')}}</div>
       </div>
     </Card>
   </div>
@@ -30,7 +30,7 @@
 <script>
 import Tables from '_c/tables'
 import request from '../../../assets/js/request.js'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'tables_page',
   components: {
@@ -43,30 +43,30 @@ export default {
       pageTotal: 0,
       pageSize: 0,
       columns: [
-        { title: '参与人账号', key: 'userId', sortable: false },
+        { title: this.$t('investor_account'), key: 'userId', sortable: false },
         {
-          title: '参与选择',
+          title: this.$t('user_choice'),
           key: 'userChoice',
           render: (h, params) => {
             return h('div', [
               h(
                 'div',
                 {},
-                params.row.userChoice === 0 ? '否' : '是'
+                params.row.userChoice === 0 ? this.$t('no') : this.$t('yes')
               )
             ])
           }
         },
-        { title: '参与金额', key: 'partInAmount' },
-        { title: '奖励金额', key: 'rewardAmount' },
-        { title: '参与结果',
+        { title: this.$t('part_in_amount'), key: 'partInAmount' },
+        { title: this.$t('reward_amount'), key: 'rewardAmount' },
+        { title: this.$t('part_in_result'),
           key: 'results',
           render: (h, params) => {
             return h('div', [
               h(
                 'div',
                 {},
-                params.row.results === 0 ? '未中奖' : '中奖'
+                params.row.results === 0 ? this.$t('un_winning') : this.$t('winning')
               )
             ])
           }
@@ -74,6 +74,43 @@ export default {
       ],
       tableData: []
     }
+  },
+  watch: {
+    local: function (val) { // 侦听单选按钮的变化，从而进行切换语言
+      this.columns = [
+        { title: this.$t('investor_account'), key: 'userId', sortable: false },
+        {
+          title: this.$t('user_choice'),
+          key: 'userChoice',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.userChoice === 0 ? this.$t('no') : this.$t('yes')
+              )
+            ])
+          }
+        },
+        { title: this.$t('part_in_amount'), key: 'partInAmount' },
+        { title: this.$t('reward_amount'), key: 'rewardAmount' },
+        { title: this.$t('part_in_result'),
+          key: 'results',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.results === 0 ? this.$t('un_winning') : this.$t('winning')
+              )
+            ])
+          }
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['local'])
   },
   methods: {
     handleDelete (params) {

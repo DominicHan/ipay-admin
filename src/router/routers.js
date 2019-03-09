@@ -72,25 +72,25 @@ export default [
   },
   {
     path: '/components',
-    name: '系统管理',
+    name: 'sys_manage',
     meta: {
       icon: 'logo-buffer',
-      title: '系统管理'
+      title: 'sys_manage'
     },
     component: Main,
     children: [
       {
         path: 'tree_table_page1',
-        name: '账号',
+        name: 'account',
         meta: {
           icon: 'md-git-branch',
-          title: '账号'
+          title: 'account'
         },
         component: () => import('@/view/components/admin-user-list/index.vue')
       },
       {
         path: '/add_admin_user',
-        name: '添加账号',
+        name: 'add_account',
         meta: {
           hideInMenu: true
         },
@@ -98,7 +98,7 @@ export default [
       },
       {
         path: '/update_admin_user',
-        name: '变更账号',
+        name: 'update_account',
         meta: {
           hideInMenu: true
         },
@@ -108,48 +108,48 @@ export default [
   },
   {
     path: '/components',
-    name: '客户管理',
+    name: 'user_manage',
     meta: {
       icon: 'logo-buffer',
-      title: '客户管理'
+      title: 'user_manage'
     },
     component: Main,
     children: [
       {
         path: 'tree_table_page2',
-        name: '投资人管理',
+        name: 'investors_manage',
         meta: {
           icon: 'md-git-branch',
-          title: '角色'
+          title: 'role'
         },
         component: () => import('@/view/components/investor-manage/index.vue')
       },
       {
         path: 'tree_table_page3',
-        name: '交易记录管理',
+        name: 'trans_re_manage',
         meta: {
           icon: 'md-git-branch',
-          title: '账号'
+          title: 'account'
         },
         component: () => import('@/view/components/trans-record-manage/index.vue')
       },
       {
         path: 'investor_relationship',
-        name: '组织结构树',
+        name: 'investors_rel',
         meta: {
           hideInMenu: true,
           icon: 'ios-people',
-          title: '组织结构树'
+          title: 'investors_rel'
         },
         component: () => import('@/view/components/investor-relationship/index.vue')
       },
       {
         path: 'investor_edit',
-        name: '投资人编辑',
+        name: 'investor_edit',
         meta: {
           hideInMenu: true,
           icon: 'ios-people',
-          title: '投资人编辑'
+          title: 'investor_edit'
         },
         component: () => import('@/view/components/investor-edit/index.vue')
       }
@@ -157,19 +157,19 @@ export default [
   },
   {
     path: '/components',
-    name: '系统设置',
+    name: 'sys_setting',
     meta: {
       icon: 'logo-buffer',
-      title: '系统设置'
+      title: 'sys_setting'
     },
     component: Main,
     children: [
       {
         path: 'system_config',
-        name: '参数设置',
+        name: 'para_setting',
         meta: {
           icon: 'md-git-branch',
-          title: '参数设置'
+          title: 'para_setting'
         },
         component: () => import('@/view/components/system_config/index.vue')
       }
@@ -177,25 +177,25 @@ export default [
   },
   {
     path: '/components',
-    name: '游戏设置',
+    name: 'game_setting',
     meta: {
       icon: 'logo-buffer',
-      title: '游戏设置'
+      title: 'game_setting'
     },
     component: Main,
     children: [
       {
         path: 'game-manage',
-        name: '游戏设置',
+        name: 'game_setting',
         meta: {
           icon: 'md-git-branch',
-          title: '游戏设置'
+          title: 'game_setting'
         },
         component: () => import('@/view/components/game-manage/index.vue')
       },
       {
         path: '/add_game',
-        name: '添加游戏',
+        name: 'add_game',
         meta: {
           hideInMenu: true
         },
@@ -203,7 +203,7 @@ export default [
       },
       {
         path: '/game_profit',
-        name: '盈亏表',
+        name: 'game_profit',
         meta: {
           hideInMenu: true
         },
@@ -211,7 +211,7 @@ export default [
       },
       {
         path: '/game_result_set',
-        name: '结果设置',
+        name: 'game_result_set',
         meta: {
           hideInMenu: true
         },

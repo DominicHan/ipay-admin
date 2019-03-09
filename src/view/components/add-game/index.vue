@@ -2,16 +2,16 @@
   <div>
     <Card>
       <div class="sys_config">
-        <Input v-model="game_title" style="width: 300px; margin-left: 15px" placeholder="请输入游戏标题">
+        <Input v-model="game_title" style="width: 300px; margin-left: 15px" :placeholder="$t('plz_input_game_title')">
         </Input>
         <br>
         <Input v-model="game_content" type="textarea" style="width: 300px; margin-left: 15px"
-               placeholder="请输入游戏内容" maxlength="255">
-          <span slot="prepend">&nbsp;&nbsp;&nbsp;游戏内容 : &nbsp;&nbsp;&nbsp;</span>
+               :placeholder="$t('plz_input_game_content')" maxlength="255">
+          <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('game_content')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <br>
         <div>
-          <div style="margin-left: 15px">可投注档位</div>
+          <div style="margin-left: 15px">{{$t('betting_gear')}}</div>
           <Checkbox v-model="one" style="margin-left: 15px">1</Checkbox>
           <Checkbox v-model="ten" style="margin-left: 15px">10</Checkbox>
           <Checkbox v-model="hundred" style="margin-left: 15px">100</Checkbox>
@@ -20,17 +20,17 @@
         <br>
         <div>
           <Col span="12">
-            <DatePicker type="date" placeholder="选择开奖日期" style="width: 168px; margin-left: 15px" :value="date"
+            <DatePicker type="date" :placeholder="$t('select_win_date')" style="width: 168px; margin-left: 15px" :value="date"
                         @on-change="handleChangeDate"></DatePicker>
           </Col>
           <Col span="12">
-            <TimePicker type="time" placeholder="选择开奖时间" style="width: 168px; margin-left: 25px" :value="time"
+            <TimePicker type="time" :placeholder="$t('select_win_time')" style="width: 168px; margin-left: 25px" :value="time"
                         @on-change="handleChangeTime"></TimePicker>
           </Col>
         </div>
         <br>
         <div>
-          <Button type="primary" style="margin-left: 15px" @click="addGameInstance">保存</Button>
+          <Button type="primary" style="margin-left: 15px" @click="addGameInstance">{{ $t('save') }}</Button>
         </div>
       </div>
     </Card>
@@ -70,23 +70,23 @@ export default {
     },
     dataCheck () {
       if (this.game_title === '') {
-        this.$Message.error('请输入游戏标题')
+        this.$Message.error(this.$t('plz_input_game_title'))
         return
       }
       if (this.game_content === '') {
-        this.$Message.error('请输入游戏内容')
+        this.$Message.error(this.$t('plz_input_game_content'))
         return
       }
       if (!(this.one || this.ten || this.hundred || this.thousand)) {
-        this.$Message.error('请选择可投注档位')
+        this.$Message.error(this.$t('plz_input_betting_gear'))
         return
       }
       if (this.date === '') {
-        this.$Message.error('请选择开奖日期')
+        this.$Message.error(this.$t('plz_select_win_date'))
         return
       }
       if (this.time === '') {
-        this.$Message.error('请选择开奖时间')
+        this.$Message.error(this.$t('plz_select_win_time'))
       }
     },
     addGameInstance () {
@@ -110,7 +110,7 @@ export default {
         is_choose += 1
       }
       if (is_choose < 3) {
-        this.$Message.error('设置参数至少是三个')
+        this.$Message.error(this.$t('setting_atleast'))
         return
       }
       let lotteryTime = this.date + ' ' + this.time

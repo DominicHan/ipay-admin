@@ -4,15 +4,18 @@ import { localRead } from '@/libs/util'
 import customZhCn from './lang/zh-CN'
 import customZhTw from './lang/zh-TW'
 import customEnUs from './lang/en-US'
+import customKoKr from './lang/ko-KR'
 import zhCnLocale from 'iview/src/locale/lang/zh-CN'
 import enUsLocale from 'iview/src/locale/lang/en-US'
 import zhTwLocale from 'iview/src/locale/lang/zh-TW'
+import koKrLocale from 'iview/src/locale/lang/ko-KR'
 
 Vue.use(VueI18n)
 
 // 自动根据浏览器系统语言设置语言
 const navLang = navigator.language
-const localLang = (navLang === 'zh-CN' || navLang === 'en-US') ? navLang : false
+// const localLang = (navLang === 'zh-CN' || navLang === 'en-US') ? navLang : false
+const localLang = (navLang === 'zh-CN' || navLang === 'ko-KR') ? navLang : false
 let lang = localLang || localRead('local') || 'zh-CN'
 
 Vue.config.lang = lang
@@ -22,7 +25,8 @@ Vue.locale = () => {}
 const messages = {
   'zh-CN': Object.assign(zhCnLocale, customZhCn),
   'zh-TW': Object.assign(zhTwLocale, customZhTw),
-  'en-US': Object.assign(enUsLocale, customEnUs)
+  'en-US': Object.assign(enUsLocale, customEnUs),
+  'ko-KR': Object.assign(koKrLocale, customKoKr)
 }
 const i18n = new VueI18n({
   locale: lang,

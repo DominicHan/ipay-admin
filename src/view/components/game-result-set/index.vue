@@ -2,27 +2,27 @@
   <div>
     <Card>
       <div class="sys_config">
-        <div>游戏标题</div>
+        <div>{{$t('game_title')}}</div>
         <div>{{gameTitle}}</div>
         <br>
-        <div>游戏内容</div>
+        <div>{{$t('game_content')}}</div>
         <Input v-model="gameContent" type="textarea" style="width: 300px;"
-               placeholder="请输入游戏内容" maxlength="255">
-          <span slot="prepend">&nbsp;&nbsp;&nbsp;游戏内容 : &nbsp;&nbsp;&nbsp;</span>
+               :placeholder="$t('plz_input_game_content')" maxlength="255">
+          <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('game_content')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <br>
-        <div>开奖时间</div>
+        <div>{{$t('lottery_time')}}</div>
         <div>{{lotteryTime}}</div>
         <br>
-        <div>设置游戏结果</div>
+        <div>{{$t('set_game_result')}}</div>
         <!--<div>{{this.changingStatus(results)}}</div>-->
         <RadioGroup v-model="results" size="large">
-          <Radio label="是" ></Radio>
-          <Radio label="否" ></Radio>
+          <Radio :label="$t('yes')" ></Radio>
+          <Radio :label="$t('no')" ></Radio>
         </RadioGroup>
         <br>
         <div>
-          <Button type="primary" style="margin-left: 15px" @click="setGameInstanceInfo">保存</Button>
+          <Button type="primary" style="margin-left: 15px" @click="setGameInstanceInfo">{{$t('save')}}</Button>
         </div>
       </div>
     </Card>
@@ -51,7 +51,7 @@ export default {
       console.log(params)
     },
     changingStatus (status) {
-      if (status === '是') {
+      if (status === this.$t('yes')) {
         return 1
       } else {
         return 0
@@ -59,11 +59,11 @@ export default {
     },
     changingUnStatus (status) {
       if (status === 1) {
-        return '是'
+        return this.$t('yes')
       } else if (status === 0) {
-        return '否'
+        return this.$t('no')
       } else {
-        return '未知'
+        return this.$t('unknown')
       }
     },
     setGameInstanceInfo () {
@@ -73,10 +73,10 @@ export default {
         gameContent: this.gameContent
       }).then(res => {
         if (res.body.rspCode === '000000') {
-          this.$Message.success('设置成功')
+          this.$Message.success(this.$t('set_success'))
           this.$router.push({ path: '/components/game-manage' })
         } else {
-          this.$Message.error('设置失败')
+          this.$Message.error(this.$t('set_error'))
         }
       })
     }
