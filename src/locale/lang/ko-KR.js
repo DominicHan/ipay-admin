@@ -173,4 +173,8 @@ export default {
   plz_input_msg_title: '메시지 제목을 입력하십시오',
   plz_input_msg_content: '메시지 내용을 입력하십시오',
   send: '보내기',
+  game_return_comp: '게임 회사 재활용 비율',
+  game_return_secondary: '게임은 두 번째 수준의 수혜자를 얻습니다',
+  game_return_primary: '게임은 첫 번째 수혜자를 얻습니다',
+  lose_return_pro: '게임 실패 반환 신용 비율',
 }

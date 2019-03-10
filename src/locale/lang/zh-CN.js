@@ -173,4 +173,8 @@ export default {
   plz_input_msg_title: '请输入消息标题',
   plz_input_msg_content: '请输入消息内容',
   send: '发送',
+  game_return_comp: '游戏获胜公司回收比例',
+  game_return_secondary: '游戏获胜二级受益人分润',
+  game_return_primary: '游戏获胜一级受益人分润',
+  lose_return_pro: '游戏失败返还信用比例',
 }
