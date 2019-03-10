@@ -164,4 +164,13 @@ export default {
   confirm_text: '游戏结果说明文字',
   plz_input_confirm_url: '请输入游戏结果URL',
   plz_input_confirm_text: '请输入游戏结果说明文字',
+  msg_send_time: '发送时间',
+  msg_title: '标题',
+  msg_content: '内容',
+  message: '消息',
+  send_message: '发送消息',
+  message_list: '消息列表',
+  plz_input_msg_title: '请输入消息标题',
+  plz_input_msg_content: '请输入消息内容',
+  send: '发送',
 }

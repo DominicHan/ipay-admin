@@ -8,7 +8,7 @@
       <div class="button-box">
         <slot>
           <Upload
-            action="http://localhost:8080/set_game_result_pic"
+            action="http://47.74.24.151:8080/set_game_result_pic"
             name="file"
             :format="['jpg','jpeg','png']"
             :on-format-error="formatError"

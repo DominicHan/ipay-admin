@@ -164,4 +164,13 @@ export default {
   confirm_text: '게임 결과 설명 텍스트',
   plz_input_confirm_url: '게임 결과를 입력하십시오URL',
   plz_input_confirm_text: '게임 결과 설명 텍스트를 입력하십시오',
+  msg_send_time: '전송 시간',
+  msg_title: '제목',
+  msg_content: '콘텐츠',
+  message: '메시지',
+  send_message: '메시지 보내기',
+  message_list: '메시지 목록',
+  plz_input_msg_title: '메시지 제목을 입력하십시오',
+  plz_input_msg_content: '메시지 내용을 입력하십시오',
+  send: '보내기',
 }

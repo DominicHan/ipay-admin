@@ -87,7 +87,16 @@ export default ({
     return Vue.http.get(url_root + 'bg/validate_pic?timestamp=' + data)
   },
   setGameResultPic (data) {
-    return Vue.http.post(url_root + 'set_game_result_pic' + data)
+    return Vue.http.post(url_root + 'set_game_result_pic', data)
+  },
+  sendPush (data) {
+    return Vue.http.post(url_root + 'bg/send_push', data)
+  },
+  messageList (data) {
+    return Vue.http.post(url_root + 'bg/message_list', data)
+  },
+  delMessage (data) {
+    return Vue.http.post(url_root + 'bg/del_message', data)
   }
 })
 

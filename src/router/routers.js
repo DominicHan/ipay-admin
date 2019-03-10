@@ -220,6 +220,35 @@ export default [
     ]
   },
   {
+    path: '/components',
+    name: 'message',
+    meta: {
+      icon: 'logo-buffer',
+      title: 'message'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'push_message',
+        name: 'send_message',
+        meta: {
+          icon: 'md-git-branch',
+          title: 'send_message'
+        },
+        component: () => import('@/view/components/push-message/index.vue')
+      },
+      {
+        path: 'push_message_list',
+        name: 'message_list',
+        meta: {
+          icon: 'md-git-branch',
+          title: 'message_list'
+        },
+        component: () => import('@/view/components/push-message-list/index.vue')
+      }
+    ]
+  },
+  {
     path: '/argu',
     name: 'argu',
     meta: {
