@@ -158,5 +158,10 @@ export default {
   plz_input_user_name: '사용자 이름을 입력하십시오',
   account_cannon_be_empty: '账号不能为空',
   pwd_cannon_empty: '비밀번호는 비워 둘 수 없습니다',
-  ver_code_cannon_empty: '인증 코드는 비워 둘 수 없습니다'
+  ver_code_cannon_empty: '인증 코드는 비워 둘 수 없습니다',
+  update_pic: '이미지 업로드',
+  confirm_url: '게임 결과URL',
+  confirm_text: '게임 결과 설명 텍스트',
+  plz_input_confirm_url: '게임 결과를 입력하십시오URL',
+  plz_input_confirm_text: '게임 결과 설명 텍스트를 입력하십시오',
 }

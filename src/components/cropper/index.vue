@@ -4,43 +4,23 @@
       <img class="cropper-image" :id="imgId" alt="">
     </div>
     <div class="right-con">
-      <div v-if="preview" class="preview-box" :id="previewId"></div>
+      <div class="preview-box" :id="previewId"></div>
       <div class="button-box">
         <slot>
-          <Upload action="image/upload" :before-upload="beforeUpload">
-            <Button style="width: 150px;" type="primary">上传图片</Button>
+          <Upload
+            action="http://localhost:8080/set_game_result_pic"
+            name="file"
+            :format="['jpg','jpeg','png']"
+            :on-format-error="formatError"
+            :on-success="uploadSuccess"
+            :on-error="uploadError"
+            :before-upload="beforeUpload">
+            <Button style="width: 150px;" type="primary">{{$t('update_pic')}}</Button>
           </Upload>
         </slot>
-        <div v-show="insideSrc">
-          <Button type="primary" @click="rotate">
-            <Icon type="md-refresh" :size="18"/>
-          </Button>
-          <Button type="primary" @click="shrink">
-            <Icon type="md-remove" :size="18"/>
-          </Button>
-          <Button type="primary" @click="magnify">
-            <Icon type="md-add" :size="18"/>
-          </Button>
-          <Button type="primary" @click="scale('X')">
-            <Icon custom="iconfont icon-shuipingfanzhuan" :size="18"/>
-          </Button>
-          <Button type="primary" @click="scale('Y')">
-            <Icon custom="iconfont icon-chuizhifanzhuan" :size="18"/>
-          </Button>
-          <Button type="primary" @click="move(0, -moveStep)">
-            <Icon type="md-arrow-round-up" :size="18"/>
-          </Button>
-          <Button type="primary" @click="move(-moveStep, 0)">
-            <Icon type="md-arrow-round-back" :size="18"/>
-          </Button>
-          <Button type="primary" @click="move(0, moveStep)">
-            <Icon type="md-arrow-round-down" :size="18"/>
-          </Button>
-          <Button type="primary" @click="move(moveStep, 0)">
-            <Icon type="md-arrow-round-forward" :size="18"/>
-          </Button>
-          <Button style="width: 150px;margin-top: 10px;" type="primary" @click="crop">{{ cropButtonText }}</Button>
-        </div>
+        <!--<div v-show="insideSrc">-->
+          <!--<Button style="width: 150px;margin-top: 10px;" type="primary" @click="crop">{{ cropButtonText }}</Button>-->
+        <!--</div>-->
       </div>
     </div>
   </div>
@@ -59,7 +39,7 @@ export default {
     },
     preview: {
       type: Boolean,
-      default: true
+      default: false
     },
     moveStep: {
       type: Number,
@@ -68,12 +48,12 @@ export default {
     cropButtonText: {
       type: String,
       default: '裁剪'
-    }
+    },
   },
   data () {
     return {
       cropper: null,
-      insideSrc: ''
+      insideSrc: '',
     }
   },
   computed: {
@@ -99,7 +79,17 @@ export default {
       reader.onload = (event) => {
         this.insideSrc = event.srcElement.result
       }
-      return false
+      //return false
+    },
+    uploadSuccess (response, file, fileList) {
+      // console.log('res-Success',response)
+      this.$emit("on-submit", response.data.path)
+    },
+    uploadError (error, file, fileList) {
+      console.log('res-Error',error)
+    },
+    formatError (file, fileList) {
+      console.log('format-Error',file)
     },
     replace (src) {
       this.cropper.replace(src)

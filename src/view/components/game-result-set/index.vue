@@ -21,6 +21,21 @@
           <Radio :label="$t('no')" ></Radio>
         </RadioGroup>
         <br>
+        <div>{{$t('confirm_text')}}</div>
+        <Input v-model="confirmText" type="textarea" style="width: 300px;"
+               :placeholder="$t('plz_input_confirm_text')" maxlength="255">
+        </Input>
+        <br>
+        <div>{{$t('confirm_url')}}</div>
+        <Input v-model="confirmUrl" type="textarea" style="width: 300px;"
+               :placeholder="$t('plz_input_confirm_url')" maxlength="255">
+        </Input>
+        <br>
+          <cropper
+            @on-crop="handleCroped"
+            @on-submit="updatePic"
+          ></cropper>
+        <br>
         <div>
           <Button type="primary" style="margin-left: 15px" @click="setGameInstanceInfo">{{$t('save')}}</Button>
         </div>
@@ -32,23 +47,37 @@
 <script>
 import Tables from '_c/tables'
 import request from '../../../assets/js/request.js'
-
+import Cropper from '@/components/cropper'
 export default {
   name: 'tables_page',
   components: {
-    Tables
+    Tables,
+    Cropper
   },
   data () {
     return {
+      gameNum: -1,
       gameTitle: '',
       gameContent: '',
       lotteryTime: '',
-      results: ''
+      results: '',
+      confirmPic: '',
+      confirmUrl: '',
+      confirmText: ''
     }
   },
   methods: {
     handleDelete (params) {
       console.log(params)
+    },
+    handleCroped (blob) {
+      const formData = new FormData()
+      formData.append('croppedImg', blob)
+      request.setGameResultPic({
+        file: blob
+      }).then(() => {
+        this.$Message.success('Upload success~')
+      })
     },
     changingStatus (status) {
       if (status === this.$t('yes')) {
@@ -70,7 +99,10 @@ export default {
       request.setGameInstanceInfo({
         id: this.$route.query.gameId,
         results: this.changingStatus(this.results),
-        gameContent: this.gameContent
+        gameContent: this.gameContent,
+        confirmUrl: this.confirmUrl,
+        confirmText: this.confirmText,
+        confirmPic: this.confirmPic
       }).then(res => {
         if (res.body.rspCode === '000000') {
           this.$Message.success(this.$t('set_success'))
@@ -79,6 +111,9 @@ export default {
           this.$Message.error(this.$t('set_error'))
         }
       })
+    },
+    updatePic (pic) {
+      this.confirmPic = pic;
     }
   },
   mounted () {
@@ -86,10 +121,14 @@ export default {
       id: this.$route.query.gameId
     }).then(res => {
       // console.log(JSON.stringify(res.body.data));
+      this.gameNum = res.body.data.instance.id
       this.gameTitle = res.body.data.instance.gameTitle
       this.gameContent = res.body.data.instance.gameContent
       this.lotteryTime = res.body.data.instance.lotteryTime
       this.results = this.changingUnStatus(res.body.data.instance.results)
+      this.confirmPic = res.body.data.instance.confirmPic
+      this.confirmUrl = res.body.data.instance.confirmUrl
+      this.confirmText = res.body.data.instance.confirmText
     })
   }
 }

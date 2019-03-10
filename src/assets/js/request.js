@@ -85,6 +85,9 @@ export default ({
   },
   validatePic1 (data) {
     return Vue.http.get(url_root + 'bg/validate_pic?timestamp=' + data)
+  },
+  setGameResultPic (data) {
+    return Vue.http.post(url_root + 'set_game_result_pic' + data)
   }
 })
 

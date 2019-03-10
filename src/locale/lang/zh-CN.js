@@ -158,5 +158,10 @@ export default {
   plz_input_user_name: '请输入用户名',
   account_cannon_be_empty: '账号不能为空',
   pwd_cannon_empty: '密码不能为空',
-  ver_code_cannon_empty: '验证码不能为空'
+  ver_code_cannon_empty: '验证码不能为空',
+  update_pic: '上传图片',
+  confirm_url: '游戏结果URL',
+  confirm_text: '游戏结果说明文字',
+  plz_input_confirm_url: '请输入游戏结果URL',
+  plz_input_confirm_text: '请输入游戏结果说明文字',
 }
