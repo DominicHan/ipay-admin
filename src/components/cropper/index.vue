@@ -5,12 +5,12 @@
     </div>
     <div class="right-con">
       <div class="preview-box" :id="previewId"></div>
+      <a :href="videoPath" target="_blank">{{videoPath}}</a>
       <div class="button-box">
         <slot>
           <Upload
             action="http://47.74.24.151:8080/set_game_result_pic"
             name="file"
-            :format="['jpg','jpeg','png']"
             :on-format-error="formatError"
             :on-success="uploadSuccess"
             :on-error="uploadError"
@@ -30,6 +30,7 @@
 import Cropper from 'cropperjs'
 import './index.less'
 import 'cropperjs/dist/cropper.min.css'
+import rootUrl from '../../assets/js/request'
 export default {
   name: 'Cropper',
   props: {
@@ -49,11 +50,16 @@ export default {
       type: String,
       default: '裁剪'
     },
+    url: {
+      type: String,
+      default: ''
+    },
   },
   data () {
     return {
       cropper: null,
       insideSrc: '',
+      videoPath: ''
     }
   },
   computed: {
@@ -70,7 +76,11 @@ export default {
     },
     insideSrc (src) {
       this.replace(src)
-    }
+    },
+    url (src) {
+      this.replace(src)
+      this.videoPath = 'http://47.74.24.151:8080' + src
+    },
   },
   methods: {
     beforeUpload (file) {
@@ -83,6 +93,7 @@ export default {
     },
     uploadSuccess (response, file, fileList) {
       // console.log('res-Success',response)
+      this.videoPath = 'http://47.74.24.151:8080' + response.data.path;
       this.$emit("on-submit", response.data.path)
     },
     uploadError (error, file, fileList) {

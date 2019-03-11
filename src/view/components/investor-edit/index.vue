@@ -75,7 +75,7 @@ export default {
       }).then(res => {
         if (res.body.rspCode === '000000') {
           this.$Message.success(this.$t('set_success'))
-          this.$router.push({ path: '/components/investor-manage' })
+          this.$router.push({ path: '/components/tree_table_page2' })
         } else {
           this.$Message.error(this.$t('set_error'))
         }

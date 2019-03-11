@@ -44,6 +44,9 @@ export default {
           button: [
             (h, params) => {
               return h('Button', {
+                style: {
+                  marginTop: '5px'
+                },
                 props: {
                   type: 'primary',
                   size: 'small'
@@ -53,7 +56,7 @@ export default {
                     this.$router.push({ path: '/game_result_set', query: { gameId: params.row.id } })
                   }
                 }
-              }, this.$t('edit'))
+              }, '结果编辑')
             },
             (h, params) => {
               return h('Button', {
@@ -62,6 +65,7 @@ export default {
                   size: 'small'
                 },
                 style: {
+                  marginTop: '5px',
                   marginLeft: '5px'
                 },
                 on: {
@@ -86,6 +90,7 @@ export default {
               }, [
                 h('Button', {
                   style: {
+                    marginTop: '5px',
                     marginLeft: '5px'
                   },
                   props: {
@@ -94,7 +99,23 @@ export default {
                   }
                 }, this.$t('delete'))
               ])
-            }
+            },
+            (h, params) => {
+              return h('Button', {
+                style: {
+                  marginTop: '5px'
+                },
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({ path: '/game_set', query: { gameId: params.row.id } })
+                  }
+                }
+              }, '内容编辑')
+            },
           ]
         }
       ],

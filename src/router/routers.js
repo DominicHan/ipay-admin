@@ -210,6 +210,14 @@ export default [
         component: () => import('@/view/components/game-profit/index.vue')
       },
       {
+        path: '/game_set',
+        name: '游戏内容设置',
+        meta: {
+          hideInMenu: true
+        },
+        component: () => import('@/view/components/game-set/index.vue')
+      },
+      {
         path: '/game_result_set',
         name: 'game_result_set',
         meta: {

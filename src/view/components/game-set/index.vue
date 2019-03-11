@@ -2,29 +2,35 @@
   <div>
     <Card>
       <div class="sys_config">
-        <div>{{$t('set_game_result')}}</div>
-        <!--<div>{{this.changingStatus(results)}}</div>-->
-        <RadioGroup v-model="results" size="large">
-          <Radio :label="$t('yes')" ></Radio>
-          <Radio :label="$t('no')" ></Radio>
-        </RadioGroup>
-        <br>
-        <div>{{$t('confirm_text')}}</div>
-        <Input v-model="confirmText" type="textarea" style="width: 300px;"
-               :placeholder="$t('plz_input_confirm_text')" maxlength="255">
+        <div>{{$t('game_title')}}</div>
+        <Input v-model="gameTitle" style="width: 300px;"
+               :placeholder="$t('plz_input_game_title')" maxlength="255">
         </Input>
         <br>
-        <div>{{$t('confirm_url')}}</div>
-        <Input v-model="confirmUrl" type="textarea" style="width: 300px;"
-               :placeholder="$t('plz_input_confirm_url')" maxlength="255">
+        <div>{{$t('game_content')}}</div>
+        <Input v-model="gameContent" type="textarea" style="width: 300px;"
+               :placeholder="$t('plz_input_game_content')" maxlength="255">
+          <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('game_content')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <br>
-        <div>游戏结果说明图</div>
-          <cropper
-            v-bind:url="confirmPic"
-            @on-crop="handleCroped"
-            @on-submit="updatePic"
-          ></cropper>
+        <div>{{$t('lottery_time')}}</div>
+        <div>
+          <Col span="12">
+            <DatePicker type="date" :placeholder="$t('select_win_date')" style="width: 168px;" :value="lotteryTime"
+                        @on-change="handleChangeDate"></DatePicker>
+          </Col>
+          <Col span="12">
+            <TimePicker type="time" :placeholder="$t('select_win_time')" style="width: 168px; margin-left: 10px" :value="lotteryTime"
+                        @on-change="handleChangeTime"></TimePicker>
+          </Col>
+        </div>
+        <br>
+        <div>规则视频/图片</div>
+        <cropper
+          v-bind:url="rulesPic"
+          @on-crop="handleCroped"
+          @on-submit="updatePic"
+        ></cropper>
         <br>
         <div>
           <Button type="primary" style="margin-left: 15px" @click="setGameInstanceInfo">{{$t('save')}}</Button>
@@ -47,10 +53,10 @@ export default {
   data () {
     return {
       gameNum: -1,
-      results: '',
-      confirmPic: '',
-      confirmUrl: '',
-      confirmText: '',
+      gameTitle: '',
+      gameContent: '',
+      lotteryTime: '',
+      rulesPic: ''
     }
   },
   methods: {
@@ -85,10 +91,10 @@ export default {
     setGameInstanceInfo () {
       request.setGameInstanceInfo({
         id: this.$route.query.gameId,
-        results: this.changingStatus(this.results),
-        confirmUrl: this.confirmUrl,
-        confirmText: this.confirmText,
-        confirmPic: this.confirmPic
+        gameTitle: this.gameTitle,
+        gameContent: this.gameContent,
+        lotteryTime: new Date(this.lotteryTime),
+        describe: this.rulesPic
       }).then(res => {
         if (res.body.rspCode === '000000') {
           this.$Message.success(this.$t('set_success'))
@@ -99,19 +105,18 @@ export default {
       })
     },
     updatePic (pic) {
-      this.confirmPic = pic;
+      this.rulesPic = pic;
     }
   },
   mounted () {
     request.getGameInstance({
       id: this.$route.query.gameId
     }).then(res => {
-      // console.log(JSON.stringify(res.body.data));
       this.gameNum = res.body.data.instance.id
-      this.results = this.changingUnStatus(res.body.data.instance.results)
-      this.confirmPic = res.body.data.instance.confirmPic
-      this.confirmUrl = res.body.data.instance.confirmUrl
-      this.confirmText = res.body.data.instance.confirmText
+      this.gameTitle = res.body.data.instance.gameTitle
+      this.gameContent = res.body.data.instance.gameContent
+      this.lotteryTime = res.body.data.instance.lotteryTime
+      this.rulesPic = res.body.data.instance.describe
     })
   }
 }
