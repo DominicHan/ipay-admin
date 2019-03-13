@@ -11,6 +11,7 @@
           <Upload
             action="http://47.74.24.151:8080/set_game_result_pic"
             name="file"
+            :data="dirtype"
             :on-format-error="formatError"
             :on-success="uploadSuccess"
             :on-error="uploadError"
@@ -54,12 +55,16 @@ export default {
       type: String,
       default: ''
     },
+    dirtype: {
+      type: Object,
+      default: {}
+    }
   },
   data () {
     return {
       cropper: null,
       insideSrc: '',
-      videoPath: ''
+      videoPath: '',
     }
   },
   computed: {
@@ -81,6 +86,9 @@ export default {
       this.replace(src)
       this.videoPath = 'http://47.74.24.151:8080' + src
     },
+    dirtype (src) {
+      this.replace(src)
+    }
   },
   methods: {
     beforeUpload (file) {

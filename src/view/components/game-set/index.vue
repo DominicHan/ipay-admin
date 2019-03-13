@@ -27,9 +27,18 @@
         <br>
         <div>规则视频/图片</div>
         <cropper
+          v-bind:dirtype="dirType"
           v-bind:url="rulesPic"
           @on-crop="handleCroped"
           @on-submit="updatePic"
+        ></cropper>
+        <br>
+        <div>游戏列表图</div>
+        <cropper
+          v-bind:dirtype="dirType1"
+          v-bind:url="titlePic"
+          @on-crop="handleCroped"
+          @on-submit="updateTitlePic"
         ></cropper>
         <br>
         <div>
@@ -56,7 +65,10 @@ export default {
       gameTitle: '',
       gameContent: '',
       lotteryTime: '',
-      rulesPic: ''
+      rulesPic: '',
+      titlePic: '',
+      dirType: {dirType: 'game-describe'},
+      dirType1: {dirType: 'game-list'}
     }
   },
   methods: {
@@ -94,7 +106,8 @@ export default {
         gameTitle: this.gameTitle,
         gameContent: this.gameContent,
         lotteryTime: new Date(this.lotteryTime),
-        describe: this.rulesPic
+        describe: this.rulesPic,
+        titlePicture: this.titlePic
       }).then(res => {
         if (res.body.rspCode === '000000') {
           this.$Message.success(this.$t('set_success'))
@@ -106,6 +119,9 @@ export default {
     },
     updatePic (pic) {
       this.rulesPic = pic;
+    },
+    updateTitlePic (pic) {
+      this.titlePic = pic;
     }
   },
   mounted () {
@@ -117,6 +133,7 @@ export default {
       this.gameContent = res.body.data.instance.gameContent
       this.lotteryTime = res.body.data.instance.lotteryTime
       this.rulesPic = res.body.data.instance.describe
+      this.titlePic = res.body.data.instance.titlePicture
     })
   }
 }

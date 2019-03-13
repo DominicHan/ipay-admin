@@ -21,6 +21,7 @@
         <br>
         <div>游戏结果说明图</div>
           <cropper
+            v-bind:dirtype="dirType"
             v-bind:url="confirmPic"
             @on-crop="handleCroped"
             @on-submit="updatePic"
@@ -51,6 +52,7 @@ export default {
       confirmPic: '',
       confirmUrl: '',
       confirmText: '',
+      dirType: {dirType: 'game-result'}
     }
   },
   methods: {
