@@ -253,6 +253,14 @@ export default [
           title: 'message_list'
         },
         component: () => import('@/view/components/push-message-list/index.vue')
+      },
+      {
+        path: 'push_message_edit',
+        name: '修改消息',
+        meta: {
+          hideInMenu: true
+        },
+        component: () => import('@/view/components/push-message-edit/index.vue')
       }
     ]
   },

@@ -14,7 +14,7 @@
         <editor style="width: 1000px" ref="editor" :value="content" @on-change="handleChange"/>
         <br>
         <div>
-          <Button type="primary" style="margin-left: 15px" @click="sendMsg">{{$t('send')}}</Button>
+          <Button type="primary" style="margin-left: 15px" @click="updateMsg">{{$t('save')}}</Button>
         </div>
       </div>
     </Card>
@@ -40,23 +40,20 @@ export default {
   methods: {
     handleChange (html, text) {
       //console.log(html, text)
-      this.content = html;
+      //this.content = html;
       //console.log('content==', this.content)
     },
     handleDelete (params) {
       console.log(params)
     },
-    sendMsg () {
-      request.sendPush({
-        alert: this.content,
+    updateMsg () {
+      request.updateMessage({
+        id: this.$route.query.id,
+        content: this.content,
         title: this.title
       }).then(res => {
         if (res.body.rspCode === '000000') {
           this.$Message.success(this.$t("add_success"))
-          this.title = '';
-          this.content = '';
-          this.$refs.editor.setHtml(this.content)
-          this.$router.push({ path: '/components/push_message_list' })
         } else {
           this.$Message.error(this.$t("add_error"))
         }
@@ -64,7 +61,13 @@ export default {
     }
   },
   mounted () {
-
+    request.getMessage({
+      id: this.$route.query.id
+    }).then(res => {
+      this.title = res.body.data.title
+      this.content = res.body.data.content
+      this.$refs.editor.setHtml(this.content)
+    })
   }
 }
 </script>

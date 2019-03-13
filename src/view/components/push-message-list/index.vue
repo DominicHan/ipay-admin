@@ -31,13 +31,25 @@ export default {
       columns: [
         { title: this.$t('msg_send_time'), key: 'createdAt', sortable: false },
         { title: this.$t('msg_title'), key: 'title', sortable: false },
-        { title: this.$t('msg_content'), key: 'content', sortable: false },
         { title: this.$t('operation'),
           key: 'handle',
           width: 230,
           // align: 'center',
           // options: ['delete'],
           button: [
+            (h, params) => {
+              return h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({ path: 'push_message_edit', query: { id: params.row.id } })
+                  }
+                }
+              }, this.$t('look_over'))
+            },
             (h, params, vm) => {
               return h('Poptip', {
                 props: {

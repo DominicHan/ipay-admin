@@ -97,6 +97,12 @@ export default ({
   },
   delMessage (data) {
     return Vue.http.post(url_root + 'bg/del_message', data)
+  },
+  getMessage (data) {
+    return Vue.http.post(url_root + 'bg/get_message', data)
+  },
+  updateMessage (data) {
+    return Vue.http.post(url_root + 'bg/update_message', data)
   }
 })
 
