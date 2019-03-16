@@ -19,6 +19,19 @@
         </div>
         <br>
         <div>
+          <div style="margin-left: 15px">{{$t('select_start_time')}}</div>
+          <Col span="12">
+            <DatePicker type="date" :placeholder="$t('select_start_date')" style="width: 168px; margin-left: 15px" :value="start_date"
+                        @on-change="handleChangeStartDate"></DatePicker>
+          </Col>
+          <Col span="12">
+            <TimePicker type="time" :placeholder="$t('select_start_time')" style="width: 168px; margin-left: 25px" :value="start_time"
+                        @on-change="handleChangeStartTime"></TimePicker>
+          </Col>
+        </div>
+        <br>
+        <div>
+          <div style="margin-left: 15px">{{$t('select_win_time')}}</div>
           <Col span="12">
             <DatePicker type="date" :placeholder="$t('select_win_date')" style="width: 168px; margin-left: 15px" :value="date"
                         @on-change="handleChangeDate"></DatePicker>
@@ -55,7 +68,9 @@ export default {
       date: '',
       time: '',
       game_content: '',
-      game_title: ''
+      game_title: '',
+      start_date: '',
+      start_time: '',
     }
   },
   methods: {
@@ -67,6 +82,12 @@ export default {
     },
     handleChangeTime (data) {
       this.time = data
+    },
+    handleChangeStartDate (data) {
+      this.start_date = data
+    },
+    handleChangeStartTime (data) {
+      this.start_time = data
     },
     dataCheck () {
       if (this.game_title === '') {
@@ -87,6 +108,13 @@ export default {
       }
       if (this.time === '') {
         this.$Message.error(this.$t('plz_select_win_time'))
+      }
+      if (this.start_date === '') {
+        this.$Message.error(this.$t('plz_select_start_date'))
+        return
+      }
+      if (this.start_time === '') {
+        this.$Message.error(this.$t('plz_select_start_time'))
       }
     },
     addGameInstance () {
@@ -115,13 +143,16 @@ export default {
       }
       let lotteryTime = this.date + ' ' + this.time
       lotteryTime = lotteryTime.replace(/-/g, '/')
+      let startTime = this.start_date + ' ' + this.start_time
+      startTime = startTime.replace(/-/g, '/')
       // lotteryTime = lotteryTime.getUTCDate();
       // let lotteryDT = new Date(lotteryTime).toUTCString();
       request.addGameInstance({
         gameTitle: this.game_title,
         lotteryTime: lotteryTime,
         gameContent: this.game_content,
-        betGear: betGear
+        betGear: betGear,
+        startTime: startTime
       }).then(res => {
         // console.log(JSON.stringify(res.body))
         this.$router.push({ path: '/components/game-manage' })

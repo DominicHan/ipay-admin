@@ -19,7 +19,7 @@
                :placeholder="$t('plz_input_confirm_url')" maxlength="255">
         </Input>
         <br>
-        <div>游戏结果说明图</div>
+        <div>{{$t('game_result_pic')}}</div>
           <cropper
             v-bind:dirtype="dirType"
             v-bind:url="confirmPic"

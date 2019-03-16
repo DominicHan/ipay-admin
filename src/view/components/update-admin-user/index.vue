@@ -3,22 +3,22 @@
     <Card>
       <div class="sys_config">
         <Input v-model="admin_name" style="width: 300px; margin-left: 15px">
-        <span slot="prepend">&nbsp;&nbsp;&nbsp;账户名 : &nbsp;&nbsp;&nbsp;</span>
+        <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('admin_name')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <br>
         <Input v-model="admin_tel" style="width: 300px; margin-left: 15px">
-        <span slot="prepend">&nbsp;&nbsp;&nbsp;手机号 : &nbsp;&nbsp;&nbsp;</span>
+        <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('admin_tel')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <br>
         <Input v-model="password" style="width: 300px; margin-left: 15px" type="password">
-        <span slot="prepend">&nbsp;&nbsp;&nbsp;密码 : &nbsp;&nbsp;&nbsp;</span>
+        <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('password')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <Input v-model="passwordOld" style="width: 300px; margin-left: 15px" type="password" v-if="showPrise">
-        <span slot="prepend">&nbsp;&nbsp;&nbsp;确认密码 : &nbsp;&nbsp;&nbsp;</span>
+        <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('confirm_pwd')}} : &nbsp;&nbsp;&nbsp;</span>
         </Input>
         <br>
         <div>
-          <Button type="primary" style="margin-left: 15px" @click="adminUserUpdate">更新</Button>
+          <Button type="primary" style="margin-left: 15px" @click="adminUserUpdate">{{$t('renewal')}}</Button>
         </div>
       </div>
     </Card>
@@ -50,10 +50,10 @@ export default {
     },
     adminUserUpdate () {
       if (this.admin_name === '') {
-        this.$Message.info('请输入账户名')
+        this.$Message.info(this.$t('plz_input_account'))
         return
       } else if (this.password === '') {
-        this.$Message.info('请输入密码')
+        this.$Message.info(this.$t('plz_input_password'))
         return
       }
       request.adminUserUpdate({
@@ -64,10 +64,10 @@ export default {
       }).then(res => {
         // console.log('rspCode===', res)
         if (res.body.rspCode === '000000') {
-          this.$Message.success('更新成功')
+          this.$Message.success(this.$t('update_success'))
           this.$router.push({ path: '/components/tree_table_page1' })
         } else {
-          this.$Message.error('更新成功')
+          this.$Message.error(this.$t('update_success'))
         }
       })
     }
