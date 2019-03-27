@@ -36,6 +36,7 @@ export default {
     ]),
     logout () {
       this.handleLogOut().then(() => {
+        sessionStorage.clear();
         this.$router.push({
           name: 'login'
         })

@@ -37,6 +37,10 @@
           </Col>
         </div>
         <br>
+        <div >规则视频/图片的有关页面地址</div>
+        <Input v-model="describ_url" style="width: 400px; " placeholder="请输入规则视频/图片的有关页面地址">
+        </Input>
+        <br>
         <div>{{$t('rules_pic_video')}}</div>
         <cropper
           v-bind:dirtype="dirType"
@@ -45,7 +49,7 @@
           @on-submit="updatePic"
         ></cropper>
         <br>
-        <div>{{$t('game_title_pic')}}</div>
+        <div style="margin-top: 100px">{{$t('game_title_pic')}}</div>
         <cropper
           v-bind:dirtype="dirType1"
           v-bind:url="titlePic"
@@ -54,7 +58,7 @@
         ></cropper>
         <br>
         <div>
-          <Button type="primary" style="margin-left: 15px" @click="setGameInstanceInfo">{{$t('save')}}</Button>
+          <Button type="primary" style="margin-left: 15px; margin-top: 100px;" @click="setGameInstanceInfo">{{$t('save')}}</Button>
         </div>
       </div>
     </Card>
@@ -85,6 +89,7 @@ export default {
       dirType1: {dirType: 'game-list'},
       start_date: '',
       start_time: '',
+      describ_url: ''
     }
   },
   methods: {
@@ -145,7 +150,8 @@ export default {
         lotteryTime: lotteryTime,
         startTime: startTime,
         describe: this.rulesPic,
-        titlePicture: this.titlePic
+        titlePicture: this.titlePic,
+        describUrl: this.describ_url
       }).then(res => {
         if (res.body.rspCode === '000000') {
           this.$Message.success(this.$t('set_success'))
@@ -172,6 +178,7 @@ export default {
       //this.lotteryTime = res.body.data.instance.lotteryTime
       this.rulesPic = res.body.data.instance.describe
       this.titlePic = res.body.data.instance.titlePicture
+      this.describ_url = res.body.data.instance.describUrl
       this.date = res.body.data.instance.lotteryTime.split(' ')[0]
       this.time = res.body.data.instance.lotteryTime.split(' ')[1]
       this.start_date = res.body.data.instance.startTime.split(' ')[0]

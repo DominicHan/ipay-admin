@@ -2,9 +2,11 @@
   <div>
     <Card>
       <div class="sys_config">
+        <div style="margin-left: 15px">游戏标题</div>
         <Input v-model="game_title" style="width: 300px; margin-left: 15px" :placeholder="$t('plz_input_game_title')">
         </Input>
         <br>
+        <div style="margin-left: 15px">游戏内容</div>
         <Input v-model="game_content" type="textarea" style="width: 300px; margin-left: 15px"
                :placeholder="$t('plz_input_game_content')" maxlength="255">
           <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('game_content')}} : &nbsp;&nbsp;&nbsp;</span>
@@ -42,8 +44,28 @@
           </Col>
         </div>
         <br>
+        <div style="margin-left: 15px">规则视频/图片的有关页面地址</div>
+        <Input v-model="describ_url" style="width: 400px; margin-left: 15px" placeholder="请输入规则视频/图片的有关页面地址">
+        </Input>
+        <br>
+        <div>{{$t('rules_pic_video')}}</div>
+        <cropper
+          v-bind:dirtype="dirType"
+          v-bind:url="rulesPic"
+          @on-crop="handleCroped"
+          @on-submit="updatePic"
+        ></cropper>
+        <br>
+        <div style="margin-top: 100px">{{$t('game_title_pic')}}</div>
+        <cropper
+          v-bind:dirtype="dirType1"
+          v-bind:url="titlePic"
+          @on-crop="handleCroped"
+          @on-submit="updateTitlePic"
+        ></cropper>
+        <br>
         <div>
-          <Button type="primary" style="margin-left: 15px" @click="addGameInstance">{{ $t('save') }}</Button>
+          <Button type="primary" style="margin-left: 15px; margin-top: 100px;" @click="addGameInstance">{{ $t('save') }}</Button>
         </div>
       </div>
     </Card>
@@ -53,11 +75,13 @@
 <script>
 import Tables from '_c/tables'
 import request from '../../../assets/js/request.js'
+import Cropper from '@/components/cropper'
 
 export default {
   name: 'tables_page',
   components: {
-    Tables
+    Tables,
+    Cropper
   },
   data () {
     return {
@@ -71,6 +95,11 @@ export default {
       game_title: '',
       start_date: '',
       start_time: '',
+      dirType: {dirType: 'game-describe'},
+      dirType1: {dirType: 'game-list'},
+      rulesPic: '',
+      titlePic: '',
+      describ_url: ''
     }
   },
   methods: {
@@ -89,6 +118,22 @@ export default {
     handleChangeStartTime (data) {
       this.start_time = data
     },
+    updatePic (pic) {
+      this.rulesPic = pic;
+    },
+    updateTitlePic (pic) {
+      this.titlePic = pic;
+    },
+    handleCroped (blob) {
+      const formData = new FormData()
+      formData.append('croppedImg', blob)
+      request.setGameResultPic({
+        file: blob
+      }).then(() => {
+        this.$Message.success('Upload success~')
+      })
+    },
+
     dataCheck () {
       if (this.game_title === '') {
         this.$Message.error(this.$t('plz_input_game_title'))
@@ -108,6 +153,7 @@ export default {
       }
       if (this.time === '') {
         this.$Message.error(this.$t('plz_select_win_time'))
+        return
       }
       if (this.start_date === '') {
         this.$Message.error(this.$t('plz_select_start_date'))
@@ -115,6 +161,7 @@ export default {
       }
       if (this.start_time === '') {
         this.$Message.error(this.$t('plz_select_start_time'))
+        return
       }
     },
     addGameInstance () {
@@ -152,7 +199,10 @@ export default {
         lotteryTime: lotteryTime,
         gameContent: this.game_content,
         betGear: betGear,
-        startTime: startTime
+        startTime: startTime,
+        describe: this.rulesPic,
+        titlePicture: this.titlePic,
+        describUrl: this.describ_url
       }).then(res => {
         // console.log(JSON.stringify(res.body))
         this.$router.push({ path: '/components/game-manage' })

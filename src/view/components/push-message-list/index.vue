@@ -31,6 +31,7 @@ export default {
       columns: [
         { title: this.$t('msg_send_time'), key: 'createdAt', sortable: false },
         { title: this.$t('msg_title'), key: 'title', sortable: false },
+        { title: '发送时间', key: 'scheduleTime', sortable: false },
         { title: this.$t('operation'),
           key: 'handle',
           width: 230,

@@ -12,12 +12,12 @@
     </TabPane>
     <TabPane :label="$t('lv1_down')">
       <Card>
-        <tables ref="tables" v-model="down_lv1" :columns="columns" @on-delete="handleDelete"/>
+        <tables ref="tables" v-model="down_lv1" :columns="columns_down" @on-delete="handleDelete"/>
       </Card>
     </TabPane>
     <TabPane :label="$t('lv2_down')">
       <Card>
-        <tables ref="tables" v-model="down_lv2" :columns="columns" @on-delete="handleDelete"/>
+        <tables ref="tables" v-model="down_lv2" :columns="columns_down" @on-delete="handleDelete"/>
       </Card>
     </TabPane>
   </Tabs>
@@ -44,6 +44,55 @@ export default {
         { title: this.$t('balance'), key: 'balance' },
         { title: this.$t('credit_balance'), key: 'creditBalance' },
         { title: this.$t('invite_code'), key: 'inviteCode' }
+      ],
+      columns_down: [
+        { title: this.$t('name'), key: 'userName', searchable: false,
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.userName
+              )
+            ])
+          } },
+        { title: this.$t('user_tel'), key: 'tel', render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.tel
+              )
+            ])
+          } },
+        { title: this.$t('balance'), key: 'balance', render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.balance
+              )
+            ])
+          } },
+        { title: this.$t('credit_balance'), key: 'creditBalance', render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.creditBalance
+              )
+            ])
+          } },
+        { title: this.$t('invite_code'), key: 'inviteCode', render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.inviteCode
+              )
+            ])
+          } },
+        { title: '邀请红利', key: 'earnings' }
       ]
     }
   },
@@ -55,6 +104,55 @@ export default {
         { title: this.$t('balance'), key: 'balance' },
         { title: this.$t('credit_balance'), key: 'creditBalance' },
         { title: this.$t('invite_code'), key: 'inviteCode' }
+      ];
+      this.columns_down = [
+        { title: this.$t('name'), key: 'userName', searchable: false,
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.userName
+              )
+            ])
+          } },
+        { title: this.$t('user_tel'), key: 'tel', render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.tel
+              )
+            ])
+          } },
+        { title: this.$t('balance'), key: 'balance', render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.balance
+              )
+            ])
+          } },
+        { title: this.$t('credit_balance'), key: 'creditBalance', render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.creditBalance
+              )
+            ])
+          } },
+        { title: this.$t('invite_code'), key: 'inviteCode', render: (h, params) => {
+            return h('div', [
+              h(
+                'div',
+                {},
+                params.row.account.inviteCode
+              )
+            ])
+          } },
+        { title: '邀请红利', key: 'earnings' }
       ]
     }
   },
@@ -74,6 +172,7 @@ export default {
       this.up_lv2 = res.body.data.up_lv2
       this.down_lv1 = res.body.data.down_lv1
       this.down_lv2 = res.body.data.down_lv2
+      //console.log('down_lv1====-=-=-', JSON.stringify(this.down_lv1))
     })
   }
 }

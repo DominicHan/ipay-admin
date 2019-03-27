@@ -3,25 +3,33 @@
     <div class="img-box">
       <img class="cropper-image" :id="imgId" alt="">
     </div>
-    <div class="right-con">
-      <div class="preview-box" :id="previewId"></div>
-      <a :href="videoPath" target="_blank">{{videoPath}}</a>
-      <div class="button-box">
-        <slot>
-          <Upload
-            action="http://47.74.24.151:8080/set_game_result_pic"
-            name="file"
-            :data="dirtype"
-            :on-format-error="formatError"
-            :on-success="uploadSuccess"
-            :on-error="uploadError"
-            :before-upload="beforeUpload">
-            <Button style="width: 150px;" type="primary">{{$t('update_pic')}}</Button>
-          </Upload>
-        </slot>
-        <!--<div v-show="insideSrc">-->
-          <!--<Button style="width: 150px;margin-top: 10px;" type="primary" @click="crop">{{ cropButtonText }}</Button>-->
-        <!--</div>-->
+    <div class="right-line">
+      <div class="right-con">
+        <div class="preview-box" :id="previewId"></div>
+        <a :href="videoPath" target="_blank">{{videoPath}}</a>
+        <div class="button-box">
+          <slot>
+            <Upload
+              action="http://47.74.24.151:8080/set_game_result_pic"
+              name="file"
+              :data="dirtype"
+              :on-format-error="formatError"
+              :on-success="uploadSuccess"
+              :on-error="uploadError"
+              :before-upload="beforeUpload">
+              <Button style="width: 150px;" type="primary">{{$t('update_pic')}}</Button>
+            </Upload>
+          </slot>
+          <!--<div v-show="insideSrc">-->
+            <!--<Button style="width: 150px;margin-top: 10px;" type="primary" @click="crop">{{ cropButtonText }}</Button>-->
+          <!--</div>-->
+        </div>
+      </div>
+      <div class="right-pre">
+      <video v-if="isVideo(videoPath)" class="video-pre" :src="videoPath" :alt="$t('rules_pic_video')"
+             width="400" height="300" controls="controls">
+        您的浏览器不支持视频标签</video>
+      <img :src="videoPath" v-else style="width: 400px; height: 200px;"/>
       </div>
     </div>
   </div>
@@ -91,6 +99,10 @@ export default {
     }
   },
   methods: {
+    isVideo (src) {
+      let arr = src.split('.');
+      return arr[arr.length - 1] === 'mp4';
+    },
     beforeUpload (file) {
       const reader = new FileReader()
       reader.readAsDataURL(file)

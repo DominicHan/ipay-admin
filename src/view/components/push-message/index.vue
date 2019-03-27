@@ -7,6 +7,19 @@
                :placeholder="$t('plz_input_msg_title')" maxlength="255">
         </Input>
         <br>
+        <div>
+          <div>发送时间</div>
+          <Col span="12">
+            <DatePicker :disabled="!single" type="date" placeholder="选择发送日期" style="width: 168px;" :value="date"
+                        @on-change="handleChangeDate"></DatePicker>
+          </Col>
+          <Col span="12">
+            <TimePicker :disabled="!single" type="time" placeholder="选择发送时间" style="width: 168px;" :value="time"
+                        @on-change="handleChangeTime"></TimePicker>
+          </Col>
+          <Checkbox style="margin-top: 10px;" v-model="single">定时发送</Checkbox>
+        </div>
+        <br>
         <div>{{$t('msg_content')}}</div>
         <!--<Input v-model="content" type="textarea" style="width: 300px;"-->
                <!--:placeholder="$t('plz_input_msg_content')" maxlength="255">-->
@@ -34,7 +47,10 @@ export default {
   data () {
     return {
       title: '',
-      content: ''
+      content: '',
+      date: '',
+      time: '',
+      single: false
     }
   },
   methods: {
@@ -46,10 +62,30 @@ export default {
     handleDelete (params) {
       console.log(params)
     },
+    handleChangeDate (data) {
+      this.date = data
+    },
+    handleChangeTime (data) {
+      this.time = data
+    },
     sendMsg () {
+      let scheduleTime = null
+      if (this.single) {
+        if (this.date === '') {
+          this.$Message.error('请选择发送日期')
+          return;
+        }
+        if (this.time === '') {
+          this.$Message.error('请选择发送时间')
+          return;
+        }
+        scheduleTime = this.date + ' ' + this.time
+        scheduleTime = scheduleTime.replace(/-/g, '/')
+      }
       request.sendPush({
         alert: this.content,
-        title: this.title
+        title: this.title,
+        scheduleTime: scheduleTime
       }).then(res => {
         if (res.body.rspCode === '000000') {
           this.$Message.success(this.$t("add_success"))
