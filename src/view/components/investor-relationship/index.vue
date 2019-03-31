@@ -92,7 +92,7 @@ export default {
               )
             ])
           } },
-        { title: '邀请红利', key: 'earnings' }
+        { title: this.$t('earnings'), key: 'earnings' }
       ]
     }
   },
@@ -152,7 +152,7 @@ export default {
               )
             ])
           } },
-        { title: '邀请红利', key: 'earnings' }
+        { title: this.$t('earnings'), key: 'earnings' }
       ]
     }
   },

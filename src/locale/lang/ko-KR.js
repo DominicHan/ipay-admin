@@ -187,4 +187,11 @@ export default {
   game_title_pic: '게임 목록디오',
   game_result_pic: '게임 결과 그림',
   renewal: '업데이트',
+  describ_url: '규칙비디오/그림 URL',
+  plz_describ_url: '입력하십시오 규칙비디오/그림 URL',
+  plz_send_date: '발송 날짜를 선택해 주세요',
+  plz_send_time: '발송 시간을 선택해 주세요',
+  regularly_send: '정시에 보내다',
+  earnings: '초대장 배당금',
 }
+

@@ -187,4 +187,10 @@ export default {
   game_title_pic: '游戏列表图',
   game_result_pic: '游戏结果说明图',
   renewal: '更新',
+  describ_url: '规则视频/图片的有关页面地址',
+  plz_describ_url: '请输入规则视频/图片的有关页面地址',
+  plz_send_date: '请选择发送日期',
+  plz_send_time: '请选择发送时间',
+  regularly_send: '定时发送',
+  earnings: '邀请红利',
 }

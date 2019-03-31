@@ -8,16 +8,16 @@
         </Input>
         <br>
         <div>
-          <div>发送时间</div>
+          <div>{{$t('msg_send_time')}}</div>
           <Col span="12">
-            <DatePicker :disabled="!single" type="date" placeholder="选择发送日期" style="width: 168px;" :value="date"
+            <DatePicker :disabled="!single" type="date" :placeholder="$t('plz_send_date')" style="width: 168px;" :value="date"
                         @on-change="handleChangeDate"></DatePicker>
           </Col>
           <Col span="12">
-            <TimePicker :disabled="!single" type="time" placeholder="选择发送时间" style="width: 168px;" :value="time"
+            <TimePicker :disabled="!single" type="time" :placeholder="$t('plz_send_time')" style="width: 168px;" :value="time"
                         @on-change="handleChangeTime"></TimePicker>
           </Col>
-          <Checkbox style="margin-top: 10px;" v-model="single">定时发送</Checkbox>
+          <Checkbox style="margin-top: 10px;" v-model="single">{{$t('regularly_send')}}</Checkbox>
         </div>
         <br>
         <div>{{$t('msg_content')}}</div>
@@ -72,11 +72,11 @@ export default {
       let scheduleTime = null
       if (this.single) {
         if (this.date === '') {
-          this.$Message.error('请选择发送日期')
+          this.$Message.error(this.$t('plz_send_date'))
           return;
         }
         if (this.time === '') {
-          this.$Message.error('请选择发送时间')
+          this.$Message.error(this.$t('plz_send_time'))
           return;
         }
         scheduleTime = this.date + ' ' + this.time

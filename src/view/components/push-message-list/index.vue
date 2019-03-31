@@ -29,9 +29,9 @@ export default {
       pageTotal: 0,
       pageSize: 0,
       columns: [
-        { title: this.$t('msg_send_time'), key: 'createdAt', sortable: false },
+        { title: this.$t('create_date'), key: 'createdAt', sortable: false },
         { title: this.$t('msg_title'), key: 'title', sortable: false },
-        { title: '发送时间', key: 'scheduleTime', sortable: false },
+        { title: this.$t('msg_send_time'), key: 'scheduleTime', sortable: false },
         { title: this.$t('operation'),
           key: 'handle',
           width: 230,
@@ -84,9 +84,9 @@ export default {
   watch: {
     local: function (val) { // 侦听单选按钮的变化，从而进行切换语言
       this.columns = [
-        { title: this.$t('msg_send_time'), key: 'createdAt', sortable: false },
+        { title: this.$t('create_date'), key: 'createdAt', sortable: false },
         { title: this.$t('msg_title'), key: 'title', sortable: false },
-        { title: this.$t('msg_content'), key: 'content', sortable: false },
+        { title: this.$t('msg_send_time'), key: 'scheduleTime', sortable: false },
         { title: this.$t('operation'),
           key: 'handle',
           width: 230,

@@ -2,11 +2,11 @@
   <div>
     <Card>
       <div class="sys_config">
-        <div style="margin-left: 15px">游戏标题</div>
+        <div style="margin-left: 15px">{{$t('game_title')}}</div>
         <Input v-model="game_title" style="width: 300px; margin-left: 15px" :placeholder="$t('plz_input_game_title')">
         </Input>
         <br>
-        <div style="margin-left: 15px">游戏内容</div>
+        <div style="margin-left: 15px">{{$t('game_content')}}</div>
         <Input v-model="game_content" type="textarea" style="width: 300px; margin-left: 15px"
                :placeholder="$t('plz_input_game_content')" maxlength="255">
           <span slot="prepend">&nbsp;&nbsp;&nbsp;{{$t('game_content')}} : &nbsp;&nbsp;&nbsp;</span>
@@ -44,8 +44,8 @@
           </Col>
         </div>
         <br>
-        <div style="margin-left: 15px">规则视频/图片的有关页面地址</div>
-        <Input v-model="describ_url" style="width: 400px; margin-left: 15px" placeholder="请输入规则视频/图片的有关页面地址">
+        <div style="margin-left: 15px">{{$t('describ_url')}}</div>
+        <Input v-model="describ_url" style="width: 400px; margin-left: 15px" :placeholder="$t('plz_describ_url')">
         </Input>
         <br>
         <div>{{$t('rules_pic_video')}}</div>
