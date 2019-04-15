@@ -9,8 +9,8 @@ Vue.use(VueResource)
 Vue.http.options.emulateJSON = true
 Vue.http.options.emulateHTTP = true
 
-const url_root = 'http://47.74.24.151:8080/'
-//export const url_root = 'http://localhost:8080/'
+//const url_root = 'http://47.75.98.154:8080/'
+export const url_root = 'http://localhost:8080/'
 
 export default ({
   // 获取用户登录信息

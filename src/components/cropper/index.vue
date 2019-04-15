@@ -10,7 +10,7 @@
         <div class="button-box">
           <slot>
             <Upload
-              action="http://47.74.24.151:8080/set_game_result_pic"
+              action="http://47.75.98.154:8080/set_game_result_pic"
               name="file"
               :data="dirtype"
               :on-format-error="formatError"
@@ -92,7 +92,7 @@ export default {
     },
     url (src) {
       this.replace(src)
-      this.videoPath = 'http://47.74.24.151:8080' + src
+      this.videoPath = 'http://47.75.98.154:8080' + src
     },
     dirtype (src) {
       this.replace(src)
@@ -113,7 +113,7 @@ export default {
     },
     uploadSuccess (response, file, fileList) {
       // console.log('res-Success',response)
-      this.videoPath = 'http://47.74.24.151:8080' + response.data.path;
+      this.videoPath = 'http://47.75.98.154:8080' + response.data.path;
       this.$emit("on-submit", response.data.path)
     },
     uploadError (error, file, fileList) {
